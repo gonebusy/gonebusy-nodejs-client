@@ -1,0 +1,13 @@
+{
+  "name": "gonebusy-js-client",
+  "version": "0.0.1",
+  "description": "This is a Node JS client for communicating with the full GoneBusy API",
+  "main": "./lib/index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "alex@gonebusy.com",
+  "dependencies": {
+    "request": "^2.55.0",
+    "string": "^3.1.1"
+  }
+}
