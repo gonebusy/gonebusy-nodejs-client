@@ -1,5 +1,5 @@
 {
-  "name": "gonebusy-js-client",
+  "name": "gonebusy-nodejs-client",
   "version": "0.0.1",
   "description": "This is a Node JS client for communicating with the full GoneBusy API",
   "main": "./lib/index.js",
