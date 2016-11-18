@@ -27,7 +27,7 @@ The following shows how import and use the controller:
 
     ```js
     var config = gonebusy.configuration;
-    config.apikey = a_secret_key;
+    config.authorization = "Token <your API key>";
     ```
 
 3. Access various controllers by:
