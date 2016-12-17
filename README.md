@@ -8,31 +8,75 @@ Just use [sandbox.gonebusy.com](http://sandbox.gonebusy.com) instead of where yo
 
 The Sandbox environment is completely separate from the Live site - that includes meaning your Sandbox API Key will not work in the Live environment.
 
-## Installation
+## Sample Client Usage
 
-The SDK relies on [Node Package Manager](https://www.npmjs.com/) (NPM) being available to resolve dependencies.
-Once published you will need copy the folder `gonebusy` in to your `node_modules` folder.
+The following shows how to import the library and use it with Bluebird Promises:
 
-## Usage
+1. Configure your package.json:
 
-The following shows how import and use the controller:
+    ```js
+    {
+        "dependencies": {
+            "gonebusy-nodejs-client": "^0.0.2",
+            "bluebird": "^3.3.5"
+        }
+    }
+    ```
+
+1. ```npm install```
 
 1. Import the module:
 
     ```js
-    var gonebusy = require('gonebusy');
+    > gonebusy = require('gonebusy-nodejs-client')
     ```
 
-2. Configure any authentication parameters. For example:
+1. Configure the BASEURI for Sandbox testing
 
     ```js
-    var config = gonebusy.configuration;
-    config.authorization = "Token <your API key>";
+    > gonebusy.configuration.BASEURI = 'http://sandbox.gonebusy.com/api/v1'
     ```
-
-3. Access various controllers by:
+    
+1. Configure your API Key:
 
     ```js
-    var controller = gonebusy.XYZ;
-    controller.getItems(id, callback);
+    > gonebusy.configuration.authorization = 'Token ac98ed08b5b0a9e7c43a233aeba841ce' // Default Sandbox token
     ```
+
+1. Require Bluebird:
+
+    ```js
+    > Promise = require('bluebird').Promise
+    ```
+    
+1. Promisify all ServicesController methods:
+
+    ```js
+    > services = Promise.promisifyAll(gonebusy.ServicesController)
+    ```
+
+1. Get a list of Services for the current user:
+
+    ```js
+    > services.getServicesAsync(gonebusy.configuration).then((result)=>{console.log(result);})
+    Promise {
+      _bitField: 0,
+      _fulfillmentHandler0: undefined,
+      _rejectionHandler0: undefined,
+      _promise0: undefined,
+      _receiver0: undefined }
+    > BaseModel {
+      services: 
+       [ BaseModel {
+           categories: [],
+           description: 'A Service for Samples',
+           duration: 30,
+           id: 197264885,
+           isActive: true,
+           name: 'Sample Service',
+           ownerId: 8552697701,
+           priceModelId: 2,
+           resources: [Object],
+           shortName: null } ] }
+   ```
+   
