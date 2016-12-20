@@ -12,18 +12,20 @@ The Sandbox environment is completely separate from the Live site - that include
 
 The following shows how to import the library and use it with Bluebird Promises:
 
-1. Configure your package.json:
+Configure your package.json:
 
-    ```js
-    {
-        "dependencies": {
-            "gonebusy-nodejs-client": "^0.0.2",
-            "bluebird": "^3.3.5"
-        }
+```js
+{
+    "dependencies": {
+        "gonebusy-nodejs-client": "^0.0.2",
+        "bluebird": "^3.3.5"
     }
-    ```
+}
+```
 
-1. ```npm install```
+Make sure to ```npm install```
+
+Then try the following in a `node` console:
 
 1. Import the module:
 
