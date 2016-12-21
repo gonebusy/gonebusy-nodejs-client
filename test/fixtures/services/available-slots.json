@@ -1,0 +1,19 @@
+{
+  "service": {
+    "id": 0,
+    "owner_id": 0,
+    "resources": [
+      {
+        "id": 0,
+        "available_slots": [
+          {
+            "date": "2016-12-19",
+            "slots": [
+              "string"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

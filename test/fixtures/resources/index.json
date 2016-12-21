@@ -1,0 +1,14 @@
+{
+  "resources": [
+    {
+      "id": 0,
+      "owner_id": 0,
+      "name": "string",
+      "description": "string",
+      "resource_type": "string",
+      "capacity": 0,
+      "gender": 0,
+      "thing_type_id": 0
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+./test/controllers/*.spec.js
+--require ./test/support/helper
+--check-leaks
+--ui bdd
