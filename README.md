@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/gonebusy/gonebusy-nodejs-client.svg?branch=master)](https://travis-ci.org/gonebusy/gonebusy-nodejs-client)
+
 #Getting started
 
 ## Sandbox
