@@ -1,0 +1,26 @@
+{
+  "bookings": [
+    {
+      "id": 0,
+      "owner_id": 0,
+      "workflow_state": "string",
+      "user_message": "string",
+      "time_window": {
+        "id": 0,
+        "start_date": "2016-12-19",
+        "end_date": "2016-12-19",
+        "start_time": "string",
+        "end_time": "string",
+        "total_minutes": 0,
+        "recurs_by": "string",
+        "frequency": "string",
+        "occurrence": "string",
+        "date_recurs_by": "string",
+        "days": [
+          "string"
+        ],
+        "negation": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "pricing_models": {
+    "id": 0,
+    "owner_id": 0,
+    "name": "string",
+    "notes": "string",
+    "pricing_model_type": "string",
+    "price": "string",
+    "currency": "string"
+  }
+}

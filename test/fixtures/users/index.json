@@ -1,0 +1,31 @@
+{
+  "users": [
+    {
+      "id": 0,
+      "resource_id": 0,
+      "account_manager_id": 0,
+      "email": "string",
+      "phone": "string",
+      "first_name": "string",
+      "last_name": "string",
+      "disabled": true,
+      "business_name": "string",
+      "external_url": "string",
+      "permalink": "string",
+      "timezone": "string",
+      "address": {
+        "line1": "string",
+        "line2": "string",
+        "city": "string",
+        "state": "string",
+        "province": "string",
+        "postal_code": "string",
+        "country": "string",
+        "country_code": "string",
+        "latitude": "string",
+        "longitude": "string"
+      },
+      "role": "string"
+    }
+  ]
+}
