@@ -1,8 +1,8 @@
-var configuration = require('../../lib/configuration'),
-    nock = require('nock'),
-    chai = require('chai'),
-    chaiAsPromised = require('chai-as-promised'),
-    _ = require('lodash');
+const configuration = require('../../lib/configuration');
+const nock = require('nock');
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+const _ = require('lodash');
 
 chai.use(chaiAsPromised);
 nock.disableNetConnect();
@@ -17,5 +17,6 @@ global.gonebusy = require('../../lib/index');
 global.Promise = require('bluebird').Promise;
 
 global.testPath = __dirname.slice(0, -8);
+global.rootPath = testPath.slice(0, -5);
 
 global.fixturesPath = testPath + '/fixtures';

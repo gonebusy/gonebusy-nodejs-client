@@ -1,10 +1,11 @@
-describe('Controller Users', function() {
-    var specs = require(testPath + '/support/controllers/users');
-    var names = ['getUsers', 'getUsersPros', 'createUser', 'updateUserById', 'getUserById'];
+const specs = require(testPath + '/support/controllers/users');
 
-    _.each(names, function(name) {
-        describe('#' + name, function() {
-            var spec = specs[name];
+describe('Controller Users', function () {
+    const names = ['getUsers', 'getUsersPros', 'createUser', 'updateUserById', 'getUserById'];
+
+    _.each(names, function (name) {
+        describe('#' + name, function () {
+            const spec = specs[name];
 
             beforeEach('nock requests', spec.nockRequest);
 
