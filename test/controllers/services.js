@@ -1,11 +1,12 @@
-describe('Controller Schedules', function() {
-    var specs = require(testPath + '/support/controllers/services');
-    var names = ['getServices', 'createService', 'updateServiceById', 'getServiceById', 'deleteServiceById',
+const specs = require(testPath + '/support/controllers/services');
+
+describe('Controller Schedules', function () {
+    const names = ['getServices', 'createService', 'updateServiceById', 'getServiceById', 'deleteServiceById',
         'getServiceAvailableSlotsById'];
 
-    _.each(names, function(name) {
-        describe('#' + name, function() {
-            var spec = specs[name];
+    _.each(names, function (name) {
+        describe('#' + name, function () {
+            const spec = specs[name];
 
             beforeEach('nock requests', spec.nockRequest);
 

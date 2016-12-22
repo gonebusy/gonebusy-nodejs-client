@@ -1,10 +1,11 @@
-describe('Controller Categories', function() {
-    var specs = require(testPath + '/support/controllers/categories');
-    var names = ['getCategories', 'createCategory', 'getCategoryById'];
+const specs = require(testPath + '/support/controllers/categories');
 
-    _.each(names, function(name) {
-        describe('#' + name, function() {
-            var spec = specs[name];
+describe('Controller Categories', function () {
+    const names = ['getCategories', 'createCategory', 'getCategoryById'];
+
+    _.each(names, function (name) {
+        describe('#' + name, function () {
+            const spec = specs[name];
 
             beforeEach('nock requests', spec.nockRequest);
 

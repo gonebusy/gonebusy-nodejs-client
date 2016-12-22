@@ -1,10 +1,11 @@
-describe('Controller Bookings', function() {
-    var specs = require(testPath + '/support/controllers/bookings');
-    var names = ['getBookings', 'createBooking', 'cancelBookingById', 'updateBookingById', 'getBookingById'];
+const specs = require(testPath + '/support/controllers/bookings');
 
-    _.each(names, function(name) {
-        describe('#' + name, function() {
-            var spec = specs[name];
+describe('Controller Bookings', function () {
+    const names = ['getBookings', 'createBooking', 'cancelBookingById', 'updateBookingById', 'getBookingById'];
+
+    _.each(names, function (name) {
+        describe('#' + name, function () {
+            const spec = specs[name];
 
             beforeEach('nock requests', spec.nockRequest);
 

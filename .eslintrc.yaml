@@ -1,0 +1,44 @@
+extends: "airbnb-base/legacy"
+parser: "babel-eslint"
+rules:
+  consistent-return: 0
+  comma-dangle: 0
+  curly:
+    - 2
+    - multi
+  func-names:
+    - 2
+    - never
+  func-style:
+    - 2
+    - expression
+    - allowArrowFunctions: true
+  indent:
+    - 2
+    - 4
+    - SwitchCase: 1
+  max-len:
+    - 2
+    - code: 120
+      tabWidth: 4
+  new-cap: 0
+  no-console: 0
+  no-confusing-arrow: 0
+  padded-blocks: 0
+  semi:
+    - 2
+    - always
+env:
+  mocha: true
+  browser: true
+  node: true
+globals:
+  gonebusy: true
+  _: true
+  nock: true
+  expect: true
+  configuration: true
+  Promise: true
+  testPath: true
+  rootPath: true
+  fixturesPath: true

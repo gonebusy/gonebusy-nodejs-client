@@ -1,10 +1,11 @@
-describe('Controller PricingModels', function() {
-    var specs = require(testPath + '/support/controllers/pricing-models');
-    var names = ['getPricingModels', 'createPricingModel', 'updatePricingModelById', 'getPricingModelById'];
+const specs = require(testPath + '/support/controllers/pricing-models');
 
-    _.each(names, function(name) {
-        describe('#' + name, function() {
-            var spec = specs[name];
+describe('Controller PricingModels', function () {
+    const names = ['getPricingModels', 'createPricingModel', 'updatePricingModelById', 'getPricingModelById'];
+
+    _.each(names, function (name) {
+        describe('#' + name, function () {
+            const spec = specs[name];
 
             beforeEach('nock requests', spec.nockRequest);
 

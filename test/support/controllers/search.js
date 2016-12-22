@@ -1,23 +1,25 @@
-var SearchController = Promise.promisifyAll(gonebusy.SearchController),
-    searchFixturesPath = fixturesPath + '/search';
+const SearchQueryResponse = require(rootPath + '/lib/Models/SearchQueryResponse');
 
-var query = 'text',
-    requestParams = _.chain(configuration).pick('authorization').assign({query: query}).value();
+const SearchController = Promise.promisifyAll(gonebusy.SearchController);
+const searchFixturesPath = fixturesPath + '/search';
 
-var searchQuery = {
-    nockRequest: function() {
+const query = 'text';
+const requestParams = _.chain(configuration).pick('authorization').assign({ query: query }).value();
+
+const searchQuery = {
+    nockRequest: function () {
         nock(configuration.BASEURI)
             .get('/search/' + query)
             .replyWithFile(200, searchFixturesPath + '/index.json');
     },
-    promiseResolved: function() {
+    promiseResolved: function () {
         return expect(SearchController.searchQueryAsync(requestParams)).to.eventually.be.resolved;
     },
-    correctInstance: function() {
+    correctInstance: function () {
         return expect(SearchController.searchQueryAsync(requestParams)).to.eventually
             .be.an.instanceof(SearchQueryResponse);
     },
-    correctContent: function() {
+    correctContent: function () {
         return expect(SearchController.searchQueryAsync(requestParams)).to.eventually
             .have.property('results').and.have.all.keys(['services', 'users']);
     }
