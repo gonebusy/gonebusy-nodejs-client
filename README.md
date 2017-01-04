@@ -27,7 +27,7 @@ Configure your package.json:
 
 Make sure to ```npm install```
 
-Then try the following in a `node` console:
+Then try the following:
 
 1. Import the module:
 
