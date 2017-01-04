@@ -32,37 +32,37 @@ Then try the following:
 1. Import the module:
 
     ```js
-    gonebusy = require('gonebusy-nodejs-client')
+    var gonebusy = require('gonebusy-nodejs-client');
     ```
 
 1. Configure the BASEURI for Sandbox testing
 
     ```js
-    gonebusy.configuration.BASEURI = 'http://sandbox.gonebusy.com/api/v1'
+    gonebusy.configuration.BASEURI = 'http://sandbox.gonebusy.com/api/v1';
     ```
     
 1. Configure your API Key:
 
     ```js
-    authorization = 'Token ac98ed08b5b0a9e7c43a233aeba841ce' // Default Sandbox token
+    var authorization = 'Token ac98ed08b5b0a9e7c43a233aeba841ce'; // Default Sandbox token
     ```
 
 1. Require Bluebird:
 
     ```js
-    Promise = require('bluebird').Promise
+    var Promise = require('bluebird').Promise;
     ```
     
 1. Promisify all ServicesController methods:
 
     ```js
-    services = Promise.promisifyAll(gonebusy.ServicesController)
+    var services = Promise.promisifyAll(gonebusy.ServicesController);
     ```
 
 1. Get a list of Services for the current user:
 
     ```js
-    services.getServicesAsync({authorization}).then((result)=>{console.log(result);})
+    services.getServicesAsync({authorization}).then((result)=>{console.log(result);});
     ```
     
     Output of `console.log()`:
@@ -91,19 +91,19 @@ The following is an example of how to use the CreateServiceBody helper object wh
 1. Create an instance of CreateServiceBody to wrap your desired attributes into an object:
 
     ```js
-    new_service = new CreateServiceBody({
+    var new_service = new CreateServiceBody({
       name: 'My Sample Service',
       duration: 30,
       description: 'Sample Service for Testing',
       short_name: 'MyService'
-    })
+    });
     ```
     
 2. Note that the property passed to the constructor uses snake_case but the underlying `BaseModel` object allows access via ES6 camelCase or even a traditional getter:
 
     ```js
-    new_service.shortName
-    new_service.getShortName()
+    new_service.shortName;
+    new_service.getShortName();
     ```
     
     Both output:
@@ -113,8 +113,8 @@ The following is an example of how to use the CreateServiceBody helper object wh
     
     Setters work as well:
     ```js
-    new_service.setShortName('My Sample x2')
-    new_service.getShortName()
+    new_service.setShortName('My Sample x2');
+    new_service.getShortName();
     ```
     
     Outputs:
@@ -128,7 +128,7 @@ The following is an example of how to use the CreateServiceBody helper object wh
     services.createServiceAsync({
         authorization: 'Token ac98ed08b5b0a9e7c43a233aeba841ce',
         createServiceBody: new_service
-    }).then((result)=>{console.log(result);})
+    }).then((result)=>{console.log(result);});
     ```
     
     Output of `console.log()`:
@@ -158,7 +158,7 @@ When using Promises, the success result will be a Response instance as follows:
 services.createServiceAsync({
     authorization: 'Token ac98ed08b5b0a9e7c43a233aeba841ce',
     createServiceBody: new_service
-}).then((resp)=>{console.log(resp.getService());})
+}).then((resp)=>{console.log(resp.getService());});
 ```
 
 Output of `console.log()`:
