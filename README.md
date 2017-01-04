@@ -162,31 +162,33 @@ The following is an example of how to use the CreateServiceBody helper object wh
     
 ## Using Response Helpers
 
-Just as with Request Body helpers, there are Response helper objects corresponding to each CreateXXXBody/UpdateXXXByIdBody/etc. operation.  If using Promises, the success result will be a Response instance as follows:
+Just as with Request Body helpers, there are Response helper objects corresponding to each CreateXXXBody/UpdateXXXByIdBody/etc. operation.  
 
-    ```js
-    > services.createServiceAsync({
-          authorization: 'Token ac98ed08b5b0a9e7c43a233aeba841ce',
-          createServiceBody: new_service
-      }).then((resp)=>{console.log(resp.getService());})
+When using Promises, the success result will be a Response instance as follows:
+
+```js
+> services.createServiceAsync({
+      authorization: 'Token ac98ed08b5b0a9e7c43a233aeba841ce',
+      createServiceBody: new_service
+  }).then((resp)=>{console.log(resp.getService());})
       
-    Promise {
-      _bitField: 0,
-      _fulfillmentHandler0: undefined,
-      _rejectionHandler0: undefined,
-      _promise0: undefined,
-      _receiver0: undefined }
-    > BaseModel {
-      categories: [],
-      description: 'Sample Service for Testing',
-      duration: 30,
-      id: 4667058921,
-      isActive: true,
-      name: 'My Sample Service',
-      ownerId: 6845037920,
-      priceModelId: 3,
-      resources: [ 512294687 ],
-      shortName: 'My Sample x2' }
-    ```
+Promise {
+  _bitField: 0,
+  _fulfillmentHandler0: undefined,
+  _rejectionHandler0: undefined,
+  _promise0: undefined,
+  _receiver0: undefined }
+> BaseModel {
+  categories: [],
+  description: 'Sample Service for Testing',
+  duration: 30,
+  id: 4667058921,
+  isActive: true,
+  name: 'My Sample Service',
+  ownerId: 6845037920,
+  priceModelId: 3,
+  resources: [ 512294687 ],
+  shortName: 'My Sample x2' }
+```
 
 In this example, the result of `resp.getService()` is an instance of `EntitiesServiceResponse`.
