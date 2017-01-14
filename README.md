@@ -20,7 +20,7 @@ Configure your package.json:
 ```js
 {
     "dependencies": {
-        "gonebusy-nodejs-client": "^0.0.8",
+        "gonebusy-nodejs-client": "^0.0.9",
         "bluebird": "^3.3.5"
     }
 }
