@@ -132,7 +132,11 @@ The following is an example of how to use the CreateServiceBody helper object wh
     services.createServiceAsync({
         authorization: 'Token ac98ed08b5b0a9e7c43a233aeba841ce',
         createServiceBody: new_service
-    }).then((result)=>{console.log(result);});
+    }).then((result)=>{
+        console.log(result);
+    }).error((e)=>{
+        console.log(e);
+    })
     ```
     
     Output of `console.log()`:
