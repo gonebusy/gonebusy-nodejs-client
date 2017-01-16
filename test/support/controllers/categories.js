@@ -28,7 +28,8 @@ const getCategories = {
     }
 };
 
-const createParams = { service_id: 0, date: 'string', time: 'string', resource_id: 0, duration: 0, user_id: 0 };
+const createParams = {
+    name: 'string', description: 'string', short_name: 'string', long_name: 'string', parent_category_id: 0 };
 const requestCreateParams = _.chain(configuration).pick('authorization').assign({ createCategoryBody: createParams })
     .value();
 

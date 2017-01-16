@@ -35,6 +35,7 @@ const createParams = {
     name: 'string',
     description: 'string',
     duration: 0,
+    max_duration: 0,
     user_id: 0,
     short_name: 'string',
     price_model_id: 0,
