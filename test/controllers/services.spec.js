@@ -1,6 +1,6 @@
 const specs = require(testPath + '/support/controllers/services');
 
-describe('Controller Schedules', function () {
+describe('Controller Services', function () {
     const names = ['getServices', 'createService', 'updateServiceById', 'getServiceById', 'deleteServiceById',
         'getServiceAvailableSlotsById'];
 
