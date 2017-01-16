@@ -77,6 +77,7 @@ Then try the following:
          categories: [],
          description: 'A Service for Samples',
          duration: 30,
+         maxDuration: 30,
          id: 197264885,
          isActive: true,
          name: 'Sample Service',
@@ -98,6 +99,7 @@ The following is an example of how to use the CreateServiceBody helper object wh
     var new_service = new CreateServiceBody({
       name: 'My Sample Service',
       duration: 30,
+      max_duration: 30,
       description: 'Sample Service for Testing',
       short_name: 'MyService'
     });
@@ -147,6 +149,7 @@ The following is an example of how to use the CreateServiceBody helper object wh
        categories: [],
        description: 'Sample Service for Testing',
        duration: 30,
+       maxDuration: 30,
        id: 4667058921,
        isActive: true,
        name: 'My Sample Service',
@@ -179,6 +182,7 @@ BaseModel {
 categories: [],
 description: 'Sample Service for Testing',
 duration: 30,
+maxDuration: 30,
 id: 4667058921,
 isActive: true,
 name: 'My Sample Service',
