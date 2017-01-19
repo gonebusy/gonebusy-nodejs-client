@@ -1,5 +1,4 @@
 const GetUsersResponse = require(rootPath + '/lib/Models/GetUsersResponse');
-const GetUsersProsResponse = require(rootPath + '/lib/Models/GetUsersProsResponse');
 const CreateUserResponse = require(rootPath + '/lib/Models/CreateUserResponse');
 const GetUserByIdResponse = require(rootPath + '/lib/Models/GetUserByIdResponse');
 const UpdateUserByIdResponse = require(rootPath + '/lib/Models/UpdateUserByIdResponse');
@@ -26,26 +25,6 @@ const getUsers = {
     },
     correctContent: function () {
         return expect(UsersController.getUsersAsync(requestIndexParams)).to.eventually
-            .have.property('users').and.have.lengthOf(1);
-    }
-};
-
-const getUsersPros = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
-            .get('/users/pros')
-            .query(indexParams)
-            .replyWithFile(200, usersFixturesPath + '/index.json');
-    },
-    promiseResolved: function () {
-        return expect(UsersController.getUsersProsAsync(requestIndexParams)).to.eventually.be.resolved;
-    },
-    correctInstance: function () {
-        return expect(UsersController.getUsersProsAsync(requestIndexParams)).to.eventually
-            .be.an.instanceof(GetUsersProsResponse);
-    },
-    correctContent: function () {
-        return expect(UsersController.getUsersProsAsync(requestIndexParams)).to.eventually
             .have.property('users').and.have.lengthOf(1);
     }
 };
@@ -127,7 +106,6 @@ const updateUserById = {
 
 module.exports = {
     getUsers: getUsers,
-    getUsersPros: getUsersPros,
     createUser: createUser,
     updateUserById: updateUserById,
     getUserById: getUserById

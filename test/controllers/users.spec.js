@@ -1,7 +1,7 @@
 const specs = require(testPath + '/support/controllers/users');
 
 describe('Controller Users', function () {
-    const names = ['getUsers', 'getUsersPros', 'createUser', 'updateUserById', 'getUserById'];
+    const names = ['getUsers', 'createUser', 'updateUserById', 'getUserById'];
 
     _.each(names, function (name) {
         describe('#' + name, function () {
