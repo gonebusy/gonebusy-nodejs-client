@@ -48,17 +48,17 @@ const createPricingModel = {
     },
     correctContent: function () {
         return expect(PricingModelsController.createPricingModelAsync(requestCreateParams)).to.eventually
-            .have.property('pricingModels').and.be.a('object').and.have.property('id');
+            .have.property('pricingModel').and.be.a('object').and.have.property('id');
     }
 };
 
-const pricingModelsId = 0;
-const requestInstanceParams = _.chain(configuration).pick('authorization').assign({ id: pricingModelsId }).value();
+const pricingModelId = 0;
+const requestInstanceParams = _.chain(configuration).pick('authorization').assign({ id: pricingModelId }).value();
 
 const getPricingModelById = {
     nockRequest: function () {
         nock(configuration.BASEURI)
-            .get('/pricing_models/' + pricingModelsId)
+            .get('/pricing_models/' + pricingModelId)
             .replyWithFile(200, pricingFixturesPath + '/show.json');
     },
     promiseResolved: function () {
@@ -71,7 +71,7 @@ const getPricingModelById = {
     },
     correctContent: function () {
         return expect(PricingModelsController.getPricingModelByIdAsync(requestInstanceParams)).to.eventually
-            .have.property('pricingModels').and.be.a('object').and.have.property('id').and.equal(pricingModelsId);
+            .have.property('pricingModel').and.be.a('object').and.have.property('id').and.equal(pricingModelId);
     }
 };
 
@@ -81,7 +81,7 @@ const requestUpdateParams = _.assign({ updatePricingModelByIdBody: updateParams 
 const updatePricingModelById = {
     nockRequest: function () {
         nock(configuration.BASEURI)
-            .put('/pricing_models/' + pricingModelsId, updateParams)
+            .put('/pricing_models/' + pricingModelId, updateParams)
             .replyWithFile(200, pricingFixturesPath + '/show.json');
     },
     promiseResolved: function () {
@@ -94,7 +94,7 @@ const updatePricingModelById = {
     },
     correctContent: function () {
         return expect(PricingModelsController.updatePricingModelByIdAsync(requestUpdateParams)).to.eventually
-            .have.property('pricingModels').and.be.a('object').and.have.property('id').and.equal(pricingModelsId);
+            .have.property('pricingModel').and.be.a('object').and.have.property('id').and.equal(pricingModelId);
     }
 };
 

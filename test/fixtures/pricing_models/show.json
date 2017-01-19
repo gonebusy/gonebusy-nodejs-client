@@ -1,5 +1,5 @@
 {
-  "pricing_models": {
+  "pricing_model": {
     "id": 0,
     "owner_id": 0,
     "name": "string",
