@@ -6,7 +6,7 @@
 
 We have a Sandbox environment to play with!
 
-Just use [sandbox.gonebusy.com](http://sandbox.gonebusy.com) instead of where you see beta.gonebusy.com referenced, including where to create an account to retrieve your API Key.
+Just use [sandbox.gonebusy.com](https://sandbox.gonebusy.com) instead of where you see beta.gonebusy.com referenced, including where to create an account to retrieve your API Key.
 
 The Sandbox environment is completely separate from the Live site - that includes meaning your Sandbox API Key will not work in the Live environment.
 
@@ -38,7 +38,7 @@ Then try the following:
 1. Configure the BASEURI for Sandbox testing
 
     ```js
-    gonebusy.configuration.BASEURI = 'http://sandbox.gonebusy.com/api/v1';
+    gonebusy.configuration.BASEURI = 'https://sandbox.gonebusy.com/api/v1';
     ```
     
 1. Configure your API Key:
