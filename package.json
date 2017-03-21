@@ -1,6 +1,6 @@
 {
   "name": "gonebusy-nodejs-client",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "This is a Node JS client for communicating with the full GoneBusy API",
   "main": "./lib/index.js",
   "scripts": {
@@ -11,6 +11,10 @@
   },
   "keywords": [],
   "author": "alex@gonebusy.com",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/gonebusy/gonebusy-nodejs-client"
+  },
   "dependencies": {
     "request": "^2.55.0",
     "string": "^3.1.1"

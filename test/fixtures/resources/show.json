@@ -6,7 +6,8 @@
     "description": "string",
     "resource_type": "string",
     "capacity": 0,
-    "gender": 0,
-    "thing_type_id": 0
+    "gender": "string",
+    "thing_type_id": 0,
+    "primary_cal": false
   }
 }
