@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [0.0.9] - 2017-03-21 ##
 ### Added
-- [#](https://github.com/gonebusy/gonebusy-nodejs-client/pull/) - Add schedules array to ServiceResponse - [@alexagranov](https://github.com/alexagranov)
+- [#24](https://github.com/gonebusy/gonebusy-nodejs-client/pull/24) - Add schedules array to ServiceResponse - [@alexagranov](https://github.com/alexagranov)
 
 ## [0.0.8] - 2017-03-18 ##
 ### Fixed
