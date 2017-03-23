@@ -3,6 +3,12 @@
 
 #Getting started
 
+## Install
+
+```bash
+npm install --only=production --save gonebusy-nodejs-client
+```
+
 ## Sandbox
 
 We have a Sandbox environment to play with!
@@ -13,20 +19,9 @@ The Sandbox environment is completely separate from the Live site - that include
 
 ## Quick Start
 
+Have you followed **Install** above?
+
 The following shows how to import the library and use it with Bluebird Promises:
-
-Configure your package.json:
-
-```js
-{
-    "dependencies": {
-        "gonebusy-nodejs-client": "^0.0.9",
-        "bluebird": "^3.3.5"
-    }
-}
-```
-
-Make sure to ```npm install```
 
 Then try the following:
 
