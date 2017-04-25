@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/gonebusy/gonebusy-nodejs-client.svg?branch=master)](https://travis-ci.org/gonebusy/gonebusy-nodejs-client)
 [![npm version](https://badge.fury.io/js/gonebusy-nodejs-client.svg)](https://badge.fury.io/js/gonebusy-nodejs-client)
 
-# Getting started
+# Getting Started
 
 ## Install
 
