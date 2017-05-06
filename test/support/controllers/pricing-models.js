@@ -16,7 +16,11 @@ const getPricingModels = {
             .replyWithFile(200, `${pricingFixturesPath}/index.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.PricingModelsController.getPricingModels(requestIndexParams)).to.eventually.be.resolved;
+        return expect(
+            gonebusy.PricingModelsController.getPricingModels(requestIndexParams)
+                    .then(() => {})
+                    .catch(() => {})
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(gonebusy.PricingModelsController.getPricingModels(requestIndexParams)).to.eventually
@@ -39,8 +43,11 @@ const createPricingModel = {
             .replyWithFile(201, `${pricingFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.PricingModelsController.createPricingModel(requestCreateParams)).to.eventually
-            .be.resolved;
+        return expect(
+            gonebusy.PricingModelsController.createPricingModel(requestCreateParams)
+                    .then(() => {})
+                    .catch(() => {})
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(gonebusy.PricingModelsController.createPricingModel(requestCreateParams)).to.eventually

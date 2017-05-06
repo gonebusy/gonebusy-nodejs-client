@@ -18,7 +18,11 @@ const getResources = {
             .replyWithFile(200, `${resourcesFixturesPath}/index.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.ResourcesController.getResources(requestIndexParams)).to.eventually.be.resolved;
+        return expect(
+            gonebusy.ResourcesController.getResources(requestIndexParams)
+                    .then(() => {})
+                    .catch(() => {})
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(gonebusy.ResourcesController.getResources(requestIndexParams)).to.eventually
@@ -38,7 +42,11 @@ const getResourceThings = {
             .replyWithFile(200, `${resourcesFixturesPath}/things/index.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.ResourcesController.getResourceThings(requestIndexParams)).to.eventually.be.resolved;
+        return expect(
+            gonebusy.ResourcesController.getResourceThings(requestIndexParams)
+                    .then(() => {})
+                    .catch(() => {})
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(gonebusy.ResourcesController.getResourceThings(requestIndexParams)).to.eventually
@@ -61,7 +69,11 @@ const createResource = {
             .replyWithFile(201, `${resourcesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.ResourcesController.createResource(requestCreateParams)).to.eventually.be.resolved;
+        return expect(
+            gonebusy.ResourcesController.createResource(requestCreateParams)
+                    .then(() => {})
+                    .catch(() => {})
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(gonebusy.ResourcesController.createResource(requestCreateParams)).to.eventually

@@ -15,7 +15,11 @@ const getCategories = {
             .replyWithFile(200, `${categoriesFixturesPath}/index.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.CategoriesController.getCategories(requestIndexParams)).to.eventually.be.resolved;
+        return expect(
+            gonebusy.CategoriesController.getCategories(requestIndexParams)
+                    .then(() => {})
+                    .catch(() => {})
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(gonebusy.CategoriesController.getCategories(requestIndexParams)).to.eventually
@@ -39,7 +43,11 @@ const createCategory = {
             .replyWithFile(201, `${categoriesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.CategoriesController.createCategory(requestCreateParams)).to.eventually.be.resolved;
+        return expect(
+            gonebusy.CategoriesController.createCategory(requestCreateParams)
+                    .then(() => {})
+                    .catch(() => {})
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(gonebusy.CategoriesController.createCategory(requestCreateParams)).to.eventually

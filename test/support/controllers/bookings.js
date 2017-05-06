@@ -17,7 +17,11 @@ const getBookings = {
             .replyWithFile(200, `${bookingsFixturesPath}/index.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.BookingsController.getBookings(requestIndexParams)).to.eventually.be.resolved;
+        return expect(
+            gonebusy.BookingsController.getBookings(requestIndexParams)
+                    .then(() => {})
+                    .catch(() => {})
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(gonebusy.BookingsController.getBookings(requestIndexParams)).to.eventually
@@ -40,7 +44,11 @@ const createBooking = {
             .replyWithFile(201, `${bookingsFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.BookingsController.createBooking(requestCreateParams)).to.eventually.be.resolved;
+        return expect(
+            gonebusy.BookingsController.createBooking(requestCreateParams)
+                    .then(() => {})
+                    .catch(() => {})
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(gonebusy.BookingsController.createBooking(requestCreateParams)).to.eventually

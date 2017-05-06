@@ -19,7 +19,11 @@ const getSchedules = {
             .replyWithFile(200, `${schedulesFixturesPath}/index.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.SchedulesController.getSchedules(requestIndexParams)).to.eventually.be.resolved;
+        return expect(
+            gonebusy.SchedulesController.getSchedules(requestIndexParams)
+                    .then(() => {})
+                    .catch(() => {})
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(gonebusy.SchedulesController.getSchedules(requestIndexParams)).to.eventually
@@ -54,7 +58,11 @@ const createSchedule = {
             .replyWithFile(201, `${schedulesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.SchedulesController.createSchedule(requestCreateParams)).to.eventually.be.resolved;
+        return expect(
+            gonebusy.SchedulesController.createSchedule(requestCreateParams)
+                    .then(() => {})
+                    .catch(() => {})
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(gonebusy.SchedulesController.createSchedule(requestCreateParams)).to.eventually

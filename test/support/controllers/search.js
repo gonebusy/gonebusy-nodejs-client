@@ -12,7 +12,11 @@ const searchQuery = {
             .replyWithFile(200, `${searchFixturesPath}/index.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.SearchController.searchQuery(requestParams)).to.eventually.be.resolved;
+        return expect(
+            gonebusy.SearchController.searchQuery(requestParams)
+                    .then(() => {})
+                    .catch(() => {})
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(gonebusy.SearchController.searchQuery(requestParams)).to.eventually

@@ -18,7 +18,11 @@ const getServices = {
             .replyWithFile(200, `${servicesFixturesPath}/index.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.ServicesController.getServices(requestIndexParams)).to.eventually.be.resolved;
+        return expect(
+            gonebusy.ServicesController.getServices(requestIndexParams)
+                    .then(() => {})
+                    .catch(() => {})
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(gonebusy.ServicesController.getServices(requestIndexParams)).to.eventually
@@ -51,7 +55,11 @@ const createService = {
             .replyWithFile(201, `${servicesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.ServicesController.createService(requestCreateParams)).to.eventually.be.resolved;
+        return expect(
+            gonebusy.ServicesController.createService(requestCreateParams)
+                    .then(() => {})
+                    .catch(() => {})
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(gonebusy.ServicesController.createService(requestCreateParams)).to.eventually

@@ -16,7 +16,11 @@ const getUsers = {
             .replyWithFile(200, `${usersFixturesPath}/index.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.UsersController.getUsers(requestIndexParams)).to.eventually.be.resolved;
+        return expect(
+            gonebusy.UsersController.getUsers(requestIndexParams)
+                    .then(() => {})
+                    .catch(() => {})
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(gonebusy.UsersController.getUsers(requestIndexParams)).to.eventually
@@ -47,7 +51,11 @@ const createUser = {
             .replyWithFile(201, `${usersFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.UsersController.createUser(requestCreateParams)).to.eventually.be.resolved;
+        return expect(
+            gonebusy.UsersController.createUser(requestCreateParams)
+                    .then(() => {})
+                    .catch(() => {})
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(gonebusy.UsersController.createUser(requestCreateParams)).to.eventually
