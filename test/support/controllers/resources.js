@@ -1,51 +1,51 @@
-const GetResourcesResponse = require(rootPath + '/lib/Models/GetResourcesResponse');
-const GetResourceThingsResponse = require(rootPath + '/lib/Models/GetResourceThingsResponse');
-const CreateResourceResponse = require(rootPath + '/lib/Models/CreateResourceResponse');
-const DeleteResourceByIdResponse = require(rootPath + '/lib/Models/DeleteResourceByIdResponse');
-const GetResourceByIdResponse = require(rootPath + '/lib/Models/GetResourceByIdResponse');
-const UpdateResourceByIdResponse = require(rootPath + '/lib/Models/UpdateResourceByIdResponse');
+const GetResourcesResponse = require('../../../lib/Models/GetResourcesResponse');
+const GetResourceThingsResponse = require('../../../lib/Models/GetResourceThingsResponse');
+const CreateResourceResponse = require('../../../lib/Models/CreateResourceResponse');
+const DeleteResourceByIdResponse = require('../../../lib/Models/DeleteResourceByIdResponse');
+const GetResourceByIdResponse = require('../../../lib/Models/GetResourceByIdResponse');
+const UpdateResourceByIdResponse = require('../../../lib/Models/UpdateResourceByIdResponse');
 
 const ResourcesController = Promise.promisifyAll(gonebusy.ResourcesController);
-const resourcesFixturesPath = fixturesPath + '/resources';
+const resourcesFixturesPath = `${fixturesPath}/resources`;
 
 const indexParams = { page: 1, per_page: 10 };
 const requestIndexParams = _.chain(configuration).pick('authorization').assign(indexParams).value();
 
 const getResources = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
+    nockRequest() {
+        nock(configuration.getBaseUri())
             .get('/resources')
             .query(indexParams)
-            .replyWithFile(200, resourcesFixturesPath + '/index.json');
+            .replyWithFile(200, `${resourcesFixturesPath}/index.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(ResourcesController.getResourcesAsync(requestIndexParams)).to.eventually.be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(ResourcesController.getResourcesAsync(requestIndexParams)).to.eventually
             .be.an.instanceof(GetResourcesResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(ResourcesController.getResourcesAsync(requestIndexParams)).to.eventually
             .have.property('resources').and.have.lengthOf(1);
     }
 };
 
 const getResourceThings = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
+    nockRequest() {
+        nock(configuration.getBaseUri())
             .get('/resources/things')
             .query(indexParams)
-            .replyWithFile(200, resourcesFixturesPath + '/things/index.json');
+            .replyWithFile(200, `${resourcesFixturesPath}/things/index.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(ResourcesController.getResourceThingsAsync(requestIndexParams)).to.eventually.be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(ResourcesController.getResourceThingsAsync(requestIndexParams)).to.eventually
             .be.an.instanceof(GetResourceThingsResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(ResourcesController.getResourceThingsAsync(requestIndexParams)).to.eventually
             .have.property('things').and.have.lengthOf(1);
     }
@@ -56,19 +56,19 @@ const requestCreateParams = _.chain(configuration).pick('authorization').assign(
     .value();
 
 const createResource = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
+    nockRequest() {
+        nock(configuration.getBaseUri())
             .post('/resources/new', createParams)
-            .replyWithFile(201, resourcesFixturesPath + '/show.json');
+            .replyWithFile(201, `${resourcesFixturesPath}/show.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(ResourcesController.createResourceAsync(requestCreateParams)).to.eventually.be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(ResourcesController.createResourceAsync(requestCreateParams)).to.eventually
             .be.an.instanceof(CreateResourceResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(ResourcesController.createResourceAsync(requestCreateParams)).to.eventually
             .have.property('resource').and.be.a('object').and.have.property('id');
     }
@@ -78,38 +78,38 @@ const resourceId = 0;
 const requestInstanceParams = _.chain(configuration).pick('authorization').assign({ id: resourceId }).value();
 
 const deleteResourceById = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
-            .delete('/resources/' + resourceId)
-            .replyWithFile(200, resourcesFixturesPath + '/show.json');
+    nockRequest() {
+        nock(configuration.getBaseUri())
+            .delete(`/resources/${resourceId}`)
+            .replyWithFile(200, `${resourcesFixturesPath}/show.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(ResourcesController.deleteResourceByIdAsync(requestInstanceParams)).to.eventually.be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(ResourcesController.deleteResourceByIdAsync(requestInstanceParams)).to.eventually
             .be.an.instanceof(DeleteResourceByIdResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(ResourcesController.deleteResourceByIdAsync(requestInstanceParams)).to.eventually
             .have.property('resource').and.be.a('object').and.have.property('id').and.equal(resourceId);
     }
 };
 
 const getResourceById = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
-            .get('/resources/' + resourceId)
-            .replyWithFile(200, resourcesFixturesPath + '/show.json');
+    nockRequest() {
+        nock(configuration.getBaseUri())
+            .get(`/resources/${resourceId}`)
+            .replyWithFile(200, `${resourcesFixturesPath}/show.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(ResourcesController.getResourceByIdAsync(requestInstanceParams)).to.eventually.be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(ResourcesController.getResourceByIdAsync(requestInstanceParams)).to.eventually
             .be.an.instanceof(GetResourceByIdResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(ResourcesController.getResourceByIdAsync(requestInstanceParams)).to.eventually
             .have.property('resource').and.be.a('object').and.have.property('id').and.equal(resourceId);
     }
@@ -119,29 +119,29 @@ const updateParams = { name: 'string', description: 'string', capacity: 0, gende
 const requestUpdateParams = _.assign({ updateResourceByIdBody: updateParams }, requestInstanceParams);
 
 const updateResourceById = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
-            .put('/resources/' + resourceId, updateParams)
-            .replyWithFile(200, resourcesFixturesPath + '/show.json');
+    nockRequest() {
+        nock(configuration.getBaseUri())
+            .put(`/resources/${resourceId}`, updateParams)
+            .replyWithFile(200, `${resourcesFixturesPath}/show.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(ResourcesController.updateResourceByIdAsync(requestUpdateParams)).to.eventually.be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(ResourcesController.updateResourceByIdAsync(requestUpdateParams)).to.eventually
             .be.an.instanceof(UpdateResourceByIdResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(ResourcesController.updateResourceByIdAsync(requestUpdateParams)).to.eventually
             .have.property('resource').and.be.a('object').and.have.property('id').and.equal(resourceId);
     }
 };
 
 module.exports = {
-    getResources: getResources,
-    getResourceThings: getResourceThings,
-    createResource: createResource,
-    deleteResourceById: deleteResourceById,
-    getResourceById: getResourceById,
-    updateResourceById: updateResourceById
+    getResources,
+    getResourceThings,
+    createResource,
+    deleteResourceById,
+    getResourceById,
+    updateResourceById
 };

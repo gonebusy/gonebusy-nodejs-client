@@ -1,32 +1,32 @@
-const GetSchedulesResponse = require(rootPath + '/lib/Models/GetSchedulesResponse');
-const CreateScheduleResponse = require(rootPath + '/lib/Models/CreateScheduleResponse');
-const DeleteScheduleByIdResponse = require(rootPath + '/lib/Models/DeleteScheduleByIdResponse');
-const GetScheduleByIdResponse = require(rootPath + '/lib/Models/GetScheduleByIdResponse');
-const CreateScheduleTimeWindowResponse = require(rootPath + '/lib/Models/CreateScheduleTimeWindowResponse');
-const DeleteScheduleTimeWindowByIdResponse = require(rootPath + '/lib/Models/DeleteScheduleTimeWindowByIdResponse');
-const UpdateScheduleTimeWindowByIdResponse = require(rootPath + '/lib/Models/UpdateScheduleTimeWindowByIdResponse');
+const GetSchedulesResponse = require('../../../lib/Models/GetSchedulesResponse');
+const CreateScheduleResponse = require('../../../lib/Models/CreateScheduleResponse');
+const DeleteScheduleByIdResponse = require('../../../lib/Models/DeleteScheduleByIdResponse');
+const GetScheduleByIdResponse = require('../../../lib/Models/GetScheduleByIdResponse');
+const CreateScheduleTimeWindowResponse = require('../../../lib/Models/CreateScheduleTimeWindowResponse');
+const DeleteScheduleTimeWindowByIdResponse = require('../../../lib/Models/DeleteScheduleTimeWindowByIdResponse');
+const UpdateScheduleTimeWindowByIdResponse = require('../../../lib/Models/UpdateScheduleTimeWindowByIdResponse');
 
 const SchedulesController = Promise.promisifyAll(gonebusy.SchedulesController);
-const schedulesFixturesPath = fixturesPath + '/schedules';
+const schedulesFixturesPath = `${fixturesPath}/schedules`;
 
 const indexParams = { page: 1, per_page: 10 };
 const requestIndexParams = _.chain(configuration).pick('authorization').assign(indexParams).value();
 
 const getSchedules = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
+    nockRequest() {
+        nock(configuration.getBaseUri())
             .get('/schedules')
             .query(indexParams)
-            .replyWithFile(200, schedulesFixturesPath + '/index.json');
+            .replyWithFile(200, `${schedulesFixturesPath}/index.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(SchedulesController.getSchedulesAsync(requestIndexParams)).to.eventually.be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(SchedulesController.getSchedulesAsync(requestIndexParams)).to.eventually
             .be.an.instanceof(GetSchedulesResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(SchedulesController.getSchedulesAsync(requestIndexParams)).to.eventually
             .have.property('schedules').and.have.lengthOf(1);
     }
@@ -49,19 +49,19 @@ const requestCreateParams = _.chain(configuration).pick('authorization').assign(
     .value();
 
 const createSchedule = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
+    nockRequest() {
+        nock(configuration.getBaseUri())
             .post('/schedules/new', createParams)
-            .replyWithFile(201, schedulesFixturesPath + '/show.json');
+            .replyWithFile(201, `${schedulesFixturesPath}/show.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(SchedulesController.createScheduleAsync(requestCreateParams)).to.eventually.be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(SchedulesController.createScheduleAsync(requestCreateParams)).to.eventually
             .be.an.instanceof(CreateScheduleResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(SchedulesController.createScheduleAsync(requestCreateParams)).to.eventually
             .have.property('schedule').and.be.a('object').and.have.property('id');
     }
@@ -71,38 +71,38 @@ const scheduleId = 0;
 const requestInstanceParams = _.chain(configuration).pick('authorization').assign({ id: scheduleId }).value();
 
 const deleteScheduleById = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
-            .delete('/schedules/' + scheduleId)
-            .replyWithFile(200, schedulesFixturesPath + '/show.json');
+    nockRequest() {
+        nock(configuration.getBaseUri())
+            .delete(`/schedules/${scheduleId}`)
+            .replyWithFile(200, `${schedulesFixturesPath}/show.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(SchedulesController.deleteScheduleByIdAsync(requestInstanceParams)).to.eventually.be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(SchedulesController.deleteScheduleByIdAsync(requestInstanceParams)).to.eventually
             .be.an.instanceof(DeleteScheduleByIdResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(SchedulesController.deleteScheduleByIdAsync(requestInstanceParams)).to.eventually
             .have.property('schedule').and.be.a('object').and.have.property('id').and.equal(scheduleId);
     }
 };
 
 const getScheduleById = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
-            .get('/schedules/' + scheduleId)
-            .replyWithFile(200, schedulesFixturesPath + '/show.json');
+    nockRequest() {
+        nock(configuration.getBaseUri())
+            .get(`/schedules/${scheduleId}`)
+            .replyWithFile(200, `${schedulesFixturesPath}/show.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(SchedulesController.getScheduleByIdAsync(requestInstanceParams)).to.eventually.be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(SchedulesController.getScheduleByIdAsync(requestInstanceParams)).to.eventually
             .be.an.instanceof(GetScheduleByIdResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(SchedulesController.getScheduleByIdAsync(requestInstanceParams)).to.eventually
             .have.property('schedule').and.be.a('object').and.have.property('id').and.equal(scheduleId);
     }
@@ -114,20 +114,20 @@ const requestCreateTimeWindowParams = _.chain(configuration).pick('authorization
 }).value();
 
 const createScheduleTimeWindow = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
-            .post('/schedules/' + scheduleId + '/time_windows/new', createTimeWindowParams)
-            .replyWithFile(201, schedulesFixturesPath + '/show.json');
+    nockRequest() {
+        nock(configuration.getBaseUri())
+            .post(`/schedules/${scheduleId}/time_windows/new`, createTimeWindowParams)
+            .replyWithFile(201, `${schedulesFixturesPath}/show.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(SchedulesController.createScheduleTimeWindowAsync(requestCreateTimeWindowParams)).to.eventually
             .be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(SchedulesController.createScheduleTimeWindowAsync(requestCreateTimeWindowParams)).to.eventually
             .be.an.instanceof(CreateScheduleTimeWindowResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(SchedulesController.createScheduleTimeWindowAsync(requestCreateTimeWindowParams)).to.eventually
             .have.property('schedule').and.be.a('object').and.have.property('id');
     }
@@ -138,20 +138,20 @@ const scheduleTimeWindowId = 0;
 const requestTimeWindowInstanceParams = _.assign({ timeWindowId: scheduleTimeWindowId }, requestInstanceParams);
 
 const deleteScheduleTimeWindowById = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
-            .delete('/schedules/' + scheduleId + '/time_windows/' + scheduleTimeWindowId)
-            .replyWithFile(200, schedulesFixturesPath + '/show.json');
+    nockRequest() {
+        nock(configuration.getBaseUri())
+            .delete(`/schedules/${scheduleId}/time_windows/${scheduleTimeWindowId}`)
+            .replyWithFile(200, `${schedulesFixturesPath}/show.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(SchedulesController.deleteScheduleTimeWindowByIdAsync(requestTimeWindowInstanceParams))
             .to.eventually.be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(SchedulesController.deleteScheduleTimeWindowByIdAsync(requestTimeWindowInstanceParams))
             .to.eventually.be.an.instanceof(DeleteScheduleTimeWindowByIdResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(SchedulesController.deleteScheduleTimeWindowByIdAsync(requestTimeWindowInstanceParams))
             .to.eventually.have.property('schedule').and.be.a('object').and.have.property('id').and.equal(scheduleId);
     }
@@ -164,31 +164,31 @@ const requestUpdateTimeWindowParams = _.assign(
 );
 
 const updateScheduleTimeWindowById = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
-            .put('/schedules/' + scheduleId + '/time_windows/' + scheduleTimeWindowId, updateTimeWindowParams)
-            .replyWithFile(200, schedulesFixturesPath + '/show.json');
+    nockRequest() {
+        nock(configuration.getBaseUri())
+            .put(`/schedules/${scheduleId}/time_windows/${scheduleTimeWindowId}`, updateTimeWindowParams)
+            .replyWithFile(200, `${schedulesFixturesPath}/show.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(SchedulesController.updateScheduleTimeWindowByIdAsync(requestUpdateTimeWindowParams))
             .to.eventually.be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(SchedulesController.updateScheduleTimeWindowByIdAsync(requestUpdateTimeWindowParams))
             .to.eventually.be.an.instanceof(UpdateScheduleTimeWindowByIdResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(SchedulesController.updateScheduleTimeWindowByIdAsync(requestUpdateTimeWindowParams))
             .to.eventually.have.property('schedule').and.be.a('object').and.have.property('id').and.equal(scheduleId);
     }
 };
 
 module.exports = {
-    getSchedules: getSchedules,
-    createSchedule: createSchedule,
-    deleteScheduleById: deleteScheduleById,
-    getScheduleById: getScheduleById,
-    createScheduleTimeWindow: createScheduleTimeWindow,
-    deleteScheduleTimeWindowById: deleteScheduleTimeWindowById,
-    updateScheduleTimeWindowById: updateScheduleTimeWindowById
+    getSchedules,
+    createSchedule,
+    deleteScheduleById,
+    getScheduleById,
+    createScheduleTimeWindow,
+    deleteScheduleTimeWindowById,
+    updateScheduleTimeWindowById
 };

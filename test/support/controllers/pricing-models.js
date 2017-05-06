@@ -1,29 +1,29 @@
-const GetPricingModelsResponse = require(rootPath + '/lib/Models/GetPricingModelsResponse');
-const CreatePricingModelResponse = require(rootPath + '/lib/Models/CreatePricingModelResponse');
-const GetPricingModelByIdResponse = require(rootPath + '/lib/Models/GetPricingModelByIdResponse');
-const UpdatePricingModelByIdResponse = require(rootPath + '/lib/Models/UpdatePricingModelByIdResponse');
+const GetPricingModelsResponse = require('../../../lib/Models/GetPricingModelsResponse');
+const CreatePricingModelResponse = require('../../../lib/Models/CreatePricingModelResponse');
+const GetPricingModelByIdResponse = require('../../../lib/Models/GetPricingModelByIdResponse');
+const UpdatePricingModelByIdResponse = require('../../../lib/Models/UpdatePricingModelByIdResponse');
 
 const PricingModelsController = Promise.promisifyAll(gonebusy.PricingModelsController);
-const pricingFixturesPath = fixturesPath + '/pricing_models';
+const pricingFixturesPath = `${fixturesPath}/pricing_models`;
 
 const indexParams = { page: 1, per_page: 10 };
 const requestIndexParams = _.chain(configuration).pick('authorization').assign(indexParams).value();
 
 const getPricingModels = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
+    nockRequest() {
+        nock(configuration.getBaseUri())
             .get('/pricing_models')
             .query(indexParams)
-            .replyWithFile(200, pricingFixturesPath + '/index.json');
+            .replyWithFile(200, `${pricingFixturesPath}/index.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(PricingModelsController.getPricingModelsAsync(requestIndexParams)).to.eventually.be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(PricingModelsController.getPricingModelsAsync(requestIndexParams)).to.eventually
             .be.an.instanceof(GetPricingModelsResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(PricingModelsController.getPricingModelsAsync(requestIndexParams)).to.eventually
             .have.property('pricingModels').and.have.lengthOf(1);
     }
@@ -34,19 +34,19 @@ const requestCreateParams = _.chain(configuration).pick('authorization')
     .assign({ createPricingModelBody: createParams }).value();
 
 const createPricingModel = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
+    nockRequest() {
+        nock(configuration.getBaseUri())
             .post('/pricing_models/new', createParams)
-            .replyWithFile(201, pricingFixturesPath + '/show.json');
+            .replyWithFile(201, `${pricingFixturesPath}/show.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(PricingModelsController.createPricingModelAsync(requestCreateParams)).to.eventually.be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(PricingModelsController.createPricingModelAsync(requestCreateParams)).to.eventually
             .be.an.instanceof(CreatePricingModelResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(PricingModelsController.createPricingModelAsync(requestCreateParams)).to.eventually
             .have.property('pricingModel').and.be.a('object').and.have.property('id');
     }
@@ -56,20 +56,20 @@ const pricingModelId = 0;
 const requestInstanceParams = _.chain(configuration).pick('authorization').assign({ id: pricingModelId }).value();
 
 const getPricingModelById = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
-            .get('/pricing_models/' + pricingModelId)
-            .replyWithFile(200, pricingFixturesPath + '/show.json');
+    nockRequest() {
+        nock(configuration.getBaseUri())
+            .get(`/pricing_models/${pricingModelId}`)
+            .replyWithFile(200, `${pricingFixturesPath}/show.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(PricingModelsController.getPricingModelByIdAsync(requestInstanceParams)).to.eventually
             .be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(PricingModelsController.getPricingModelByIdAsync(requestInstanceParams)).to.eventually
             .be.an.instanceof(GetPricingModelByIdResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(PricingModelsController.getPricingModelByIdAsync(requestInstanceParams)).to.eventually
             .have.property('pricingModel').and.be.a('object').and.have.property('id').and.equal(pricingModelId);
     }
@@ -79,28 +79,28 @@ const updateParams = { name: 'string', notes: 'string', price: 0, currency: 'str
 const requestUpdateParams = _.assign({ updatePricingModelByIdBody: updateParams }, requestInstanceParams);
 
 const updatePricingModelById = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
-            .put('/pricing_models/' + pricingModelId, updateParams)
-            .replyWithFile(200, pricingFixturesPath + '/show.json');
+    nockRequest() {
+        nock(configuration.getBaseUri())
+            .put(`/pricing_models/${pricingModelId}`, updateParams)
+            .replyWithFile(200, `${pricingFixturesPath}/show.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(PricingModelsController.updatePricingModelByIdAsync(requestUpdateParams)).to.eventually
             .be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(PricingModelsController.updatePricingModelByIdAsync(requestUpdateParams)).to.eventually
             .be.an.instanceof(UpdatePricingModelByIdResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(PricingModelsController.updatePricingModelByIdAsync(requestUpdateParams)).to.eventually
             .have.property('pricingModel').and.be.a('object').and.have.property('id').and.equal(pricingModelId);
     }
 };
 
 module.exports = {
-    getPricingModels: getPricingModels,
-    createPricingModel: createPricingModel,
-    updatePricingModelById: updatePricingModelById,
-    getPricingModelById: getPricingModelById
+    getPricingModels,
+    createPricingModel,
+    updatePricingModelById,
+    getPricingModelById
 };

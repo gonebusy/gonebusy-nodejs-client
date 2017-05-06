@@ -1,7 +1,7 @@
-const spec = require(testPath + '/support/controllers/search').searchQuery;
+const spec = require('../support/controllers/search').searchQuery;
 
-describe('Controller Search', function () {
-    describe('#searchQuery', function () {
+describe('Controller Search', () => {
+    describe('#searchQuery', () => {
 
         beforeEach('nock requests', spec.nockRequest);
 

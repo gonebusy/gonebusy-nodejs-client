@@ -1,10 +1,10 @@
-const specs = require(testPath + '/support/controllers/pricing-models');
+const specs = require('../support/controllers/pricing-models');
 
-describe('Controller PricingModels', function () {
+describe('Controller PricingModels', () => {
     const names = ['getPricingModels', 'createPricingModel', 'updatePricingModelById', 'getPricingModelById'];
 
-    _.each(names, function (name) {
-        describe('#' + name, function () {
+    _.each(names, (name) => {
+        describe(`#${name}`, () => {
             const spec = specs[name];
 
             beforeEach('nock requests', spec.nockRequest);

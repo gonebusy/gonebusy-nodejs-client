@@ -1,30 +1,30 @@
-const GetBookingsResponse = require(rootPath + '/lib/Models/GetBookingsResponse');
-const CreateBookingResponse = require(rootPath + '/lib/Models/CreateBookingResponse');
-const CancelBookingByIdResponse = require(rootPath + '/lib/Models/CancelBookingByIdResponse');
-const UpdateBookingByIdResponse = require(rootPath + '/lib/Models/UpdateBookingByIdResponse');
-const GetBookingByIdResponse = require(rootPath + '/lib/Models/GetBookingByIdResponse');
+const GetBookingsResponse = require('../../../lib/Models/GetBookingsResponse');
+const CreateBookingResponse = require('../../../lib/Models/CreateBookingResponse');
+const CancelBookingByIdResponse = require('../../../lib/Models/CancelBookingByIdResponse');
+const UpdateBookingByIdResponse = require('../../../lib/Models/UpdateBookingByIdResponse');
+const GetBookingByIdResponse = require('../../../lib/Models/GetBookingByIdResponse');
 
 const BookingsController = Promise.promisifyAll(gonebusy.BookingsController);
-const bookingsFixturesPath = fixturesPath + '/bookings';
+const bookingsFixturesPath = `${fixturesPath}/bookings`;
 
 const indexParams = { page: 1, per_page: 10 };
 const requestIndexParams = _.chain(configuration).pick('authorization').assign(indexParams).value();
 
 const getBookings = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
+    nockRequest() {
+        nock(configuration.getBaseUri())
             .get('/bookings')
             .query(indexParams)
-            .replyWithFile(200, bookingsFixturesPath + '/index.json');
+            .replyWithFile(200, `${bookingsFixturesPath}/index.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(BookingsController.getBookingsAsync(requestIndexParams)).to.eventually.be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(BookingsController.getBookingsAsync(requestIndexParams)).to.eventually
             .be.an.instanceof(GetBookingsResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(BookingsController.getBookingsAsync(requestIndexParams)).to.eventually
             .have.property('bookings').and.have.lengthOf(1);
     }
@@ -35,19 +35,19 @@ const requestCreateParams = _.chain(configuration).pick('authorization').assign(
     .value();
 
 const createBooking = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
+    nockRequest() {
+        nock(configuration.getBaseUri())
             .post('/bookings/new', createParams)
-            .replyWithFile(201, bookingsFixturesPath + '/show.json');
+            .replyWithFile(201, `${bookingsFixturesPath}/show.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(BookingsController.createBookingAsync(requestCreateParams)).to.eventually.be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(BookingsController.createBookingAsync(requestCreateParams)).to.eventually
             .be.an.instanceof(CreateBookingResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(BookingsController.createBookingAsync(requestCreateParams)).to.eventually
             .have.property('booking').and.be.a('object').and.have.property('id');
     }
@@ -57,66 +57,66 @@ const bookingId = 0;
 const requestInstanceParams = _.chain(configuration).pick('authorization').assign({ id: bookingId }).value();
 
 const cancelBookingById = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
-            .delete('/bookings/' + bookingId)
-            .replyWithFile(200, bookingsFixturesPath + '/show.json');
+    nockRequest() {
+        nock(configuration.getBaseUri())
+            .delete(`/bookings/${bookingId}`)
+            .replyWithFile(200, `${bookingsFixturesPath}/show.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(BookingsController.cancelBookingByIdAsync(requestInstanceParams)).to.eventually.be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(BookingsController.cancelBookingByIdAsync(requestInstanceParams)).to.eventually
             .be.an.instanceof(CancelBookingByIdResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(BookingsController.cancelBookingByIdAsync(requestInstanceParams)).to.eventually
             .have.property('booking').and.be.a('object').and.have.property('id').and.equal(bookingId);
     }
 };
 
 const updateBookingById = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
-            .put('/bookings/' + bookingId)
-            .replyWithFile(200, bookingsFixturesPath + '/show.json');
+    nockRequest() {
+        nock(configuration.getBaseUri())
+            .put(`/bookings/${bookingId}`)
+            .replyWithFile(200, `${bookingsFixturesPath}/show.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(BookingsController.updateBookingByIdAsync(requestInstanceParams)).to.eventually.be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(BookingsController.updateBookingByIdAsync(requestInstanceParams)).to.eventually
             .be.an.instanceof(UpdateBookingByIdResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(BookingsController.updateBookingByIdAsync(requestInstanceParams)).to.eventually
             .have.property('booking').and.be.a('object').and.have.property('id').and.equal(bookingId);
     }
 };
 
 const getBookingById = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
-            .get('/bookings/' + bookingId)
-            .replyWithFile(200, bookingsFixturesPath + '/show.json');
+    nockRequest() {
+        nock(configuration.getBaseUri())
+            .get(`/bookings/${bookingId}`)
+            .replyWithFile(200, `${bookingsFixturesPath}/show.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(BookingsController.getBookingByIdAsync(requestInstanceParams)).to.eventually.be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(BookingsController.getBookingByIdAsync(requestInstanceParams)).to.eventually
             .be.an.instanceof(GetBookingByIdResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(BookingsController.getBookingByIdAsync(requestInstanceParams)).to.eventually
             .have.property('booking').and.be.a('object').and.have.property('id').and.equal(bookingId);
     }
 };
 
 module.exports = {
-    getBookings: getBookings,
-    createBooking: createBooking,
-    cancelBookingById: cancelBookingById,
-    updateBookingById: updateBookingById,
-    getBookingById: getBookingById
+    getBookings,
+    createBooking,
+    cancelBookingById,
+    updateBookingById,
+    getBookingById
 };

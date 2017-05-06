@@ -20,7 +20,7 @@
           "days": [
             "string"
           ],
-          "negation": true
+          "unavailable": false
         }
       ]
     }

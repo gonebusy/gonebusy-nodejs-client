@@ -1,10 +1,10 @@
-const specs = require(testPath + '/support/controllers/bookings');
+const specs = require('../support/controllers/bookings');
 
-describe('Controller Bookings', function () {
+describe('Controller Bookings', () => {
     const names = ['getBookings', 'createBooking', 'cancelBookingById', 'updateBookingById', 'getBookingById'];
 
-    _.each(names, function (name) {
-        describe('#' + name, function () {
+    _.each(names, (name) => {
+        describe(`#${name}`, () => {
             const spec = specs[name];
 
             beforeEach('nock requests', spec.nockRequest);

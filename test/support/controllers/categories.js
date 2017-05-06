@@ -1,28 +1,28 @@
-const GetCategoriesResponse = require(rootPath + '/lib/Models/GetCategoriesResponse');
-const CreateCategoryResponse = require(rootPath + '/lib/Models/CreateCategoryResponse');
-const GetCategoryByIdResponse = require(rootPath + '/lib/Models/GetCategoryByIdResponse');
+const GetCategoriesResponse = require('../../../lib/Models/GetCategoriesResponse');
+const CreateCategoryResponse = require('../../../lib/Models/CreateCategoryResponse');
+const GetCategoryByIdResponse = require('../../../lib/Models/GetCategoryByIdResponse');
 
 const CategoriesController = Promise.promisifyAll(gonebusy.CategoriesController);
-const categoriesFixturesPath = fixturesPath + '/categories';
+const categoriesFixturesPath = `${fixturesPath}/categories`;
 
 const indexParams = { page: 1, per_page: 10 };
 const requestIndexParams = _.chain(configuration).pick('authorization').assign(indexParams).value();
 
 const getCategories = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
+    nockRequest() {
+        nock(configuration.getBaseUri())
             .get('/categories')
             .query(indexParams)
-            .replyWithFile(200, categoriesFixturesPath + '/index.json');
+            .replyWithFile(200, `${categoriesFixturesPath}/index.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(CategoriesController.getCategoriesAsync(requestIndexParams)).to.eventually.be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(CategoriesController.getCategoriesAsync(requestIndexParams)).to.eventually
             .be.an.instanceof(GetCategoriesResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(CategoriesController.getCategoriesAsync(requestIndexParams)).to.eventually
             .have.property('categories').and.have.lengthOf(1);
     }
@@ -34,19 +34,19 @@ const requestCreateParams = _.chain(configuration).pick('authorization').assign(
     .value();
 
 const createCategory = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
+    nockRequest() {
+        nock(configuration.getBaseUri())
             .post('/categories/new', createParams)
-            .replyWithFile(201, categoriesFixturesPath + '/show.json');
+            .replyWithFile(201, `${categoriesFixturesPath}/show.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(CategoriesController.createCategoryAsync(requestCreateParams)).to.eventually.be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(CategoriesController.createCategoryAsync(requestCreateParams)).to.eventually
             .be.an.instanceof(CreateCategoryResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(CategoriesController.createCategoryAsync(requestCreateParams)).to.eventually
             .have.property('category').and.be.a('object').and.have.property('id');
     }
@@ -56,26 +56,26 @@ const categoryId = 0;
 const requestInstanceParams = _.chain(configuration).pick('authorization').assign({ id: categoryId }).value();
 
 const getCategoryById = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
-            .get('/categories/' + categoryId)
-            .replyWithFile(200, categoriesFixturesPath + '/show.json');
+    nockRequest() {
+        nock(configuration.getBaseUri())
+            .get(`/categories/${categoryId}`)
+            .replyWithFile(200, `${categoriesFixturesPath}/show.json`);
     },
-    promiseResolved: function () {
+    promiseResolved() {
         return expect(CategoriesController.getCategoryByIdAsync(requestInstanceParams)).to.eventually.be.resolved;
     },
-    correctInstance: function () {
+    correctInstance() {
         return expect(CategoriesController.getCategoryByIdAsync(requestInstanceParams)).to.eventually
             .be.an.instanceof(GetCategoryByIdResponse);
     },
-    correctContent: function () {
+    correctContent() {
         return expect(CategoriesController.getCategoryByIdAsync(requestInstanceParams)).to.eventually
             .have.property('category').and.be.a('object').and.have.property('id').and.equal(categoryId);
     }
 };
 
 module.exports = {
-    getCategories: getCategories,
-    createCategory: createCategory,
-    getCategoryById: getCategoryById
+    getCategories,
+    createCategory,
+    getCategoryById
 };

@@ -1,10 +1,10 @@
-const specs = require(testPath + '/support/controllers/users');
+const specs = require('../support/controllers/users');
 
-describe('Controller Users', function () {
+describe('Controller Users', () => {
     const names = ['getUsers', 'createUser', 'updateUserById', 'getUserById'];
 
-    _.each(names, function (name) {
-        describe('#' + name, function () {
+    _.each(names, (name) => {
+        describe(`#${name}`, () => {
             const spec = specs[name];
 
             beforeEach('nock requests', spec.nockRequest);

@@ -1,18 +1,18 @@
-const specs = require(testPath + '/support/controllers/schedules');
+const specs = require('../support/controllers/schedules');
 
-describe('Controller Schedules', function () {
+describe('Controller Schedules', () => {
     const names = ['getSchedules', 'createSchedule', 'deleteScheduleById', 'getScheduleById',
         'createScheduleTimeWindow', 'deleteScheduleTimeWindowById', 'updateScheduleTimeWindowById'];
 
-    _.each(names, function (name) {
-        describe('#' + name, function () {
+    _.each(names, (name) => {
+        describe(`#${name}`, () => {
             const spec = specs[name];
 
             beforeEach('nock requests', spec.nockRequest);
 
-            it('resolve promise', spec.promiseResolved);
-            it('resolve correct response', spec.correctInstance);
-            it('resolve correct content', spec.correctContent);
+            it('resolves promise', spec.promiseResolved);
+            it('resolves correct response', spec.correctInstance);
+            it('resolves correct content', spec.correctContent);
         });
     });
 });
