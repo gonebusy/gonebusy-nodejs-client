@@ -1,6 +1,5 @@
 const SearchQueryResponse = require('../../../lib/Models/SearchQueryResponse');
 
-const SearchController = Promise.promisifyAll(gonebusy.SearchController);
 const searchFixturesPath = `${fixturesPath}/search`;
 
 const query = 'text';
@@ -13,14 +12,14 @@ const searchQuery = {
             .replyWithFile(200, `${searchFixturesPath}/index.json`);
     },
     promiseResolved() {
-        return expect(SearchController.searchQueryAsync(requestParams)).to.eventually.be.resolved;
+        return expect(gonebusy.SearchController.searchQuery(requestParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(SearchController.searchQueryAsync(requestParams)).to.eventually
+        return expect(gonebusy.SearchController.searchQuery(requestParams)).to.eventually
             .be.an.instanceof(SearchQueryResponse);
     },
     correctContent() {
-        return expect(SearchController.searchQueryAsync(requestParams)).to.eventually
+        return expect(gonebusy.SearchController.searchQuery(requestParams)).to.eventually
             .have.property('results').and.have.all.keys(['services', 'users']);
     }
 };

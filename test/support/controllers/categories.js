@@ -2,7 +2,6 @@ const GetCategoriesResponse = require('../../../lib/Models/GetCategoriesResponse
 const CreateCategoryResponse = require('../../../lib/Models/CreateCategoryResponse');
 const GetCategoryByIdResponse = require('../../../lib/Models/GetCategoryByIdResponse');
 
-const CategoriesController = Promise.promisifyAll(gonebusy.CategoriesController);
 const categoriesFixturesPath = `${fixturesPath}/categories`;
 
 const indexParams = { page: 1, per_page: 10 };
@@ -16,14 +15,14 @@ const getCategories = {
             .replyWithFile(200, `${categoriesFixturesPath}/index.json`);
     },
     promiseResolved() {
-        return expect(CategoriesController.getCategoriesAsync(requestIndexParams)).to.eventually.be.resolved;
+        return expect(gonebusy.CategoriesController.getCategories(requestIndexParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(CategoriesController.getCategoriesAsync(requestIndexParams)).to.eventually
+        return expect(gonebusy.CategoriesController.getCategories(requestIndexParams)).to.eventually
             .be.an.instanceof(GetCategoriesResponse);
     },
     correctContent() {
-        return expect(CategoriesController.getCategoriesAsync(requestIndexParams)).to.eventually
+        return expect(gonebusy.CategoriesController.getCategories(requestIndexParams)).to.eventually
             .have.property('categories').and.have.lengthOf(1);
     }
 };
@@ -40,14 +39,14 @@ const createCategory = {
             .replyWithFile(201, `${categoriesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(CategoriesController.createCategoryAsync(requestCreateParams)).to.eventually.be.resolved;
+        return expect(gonebusy.CategoriesController.createCategory(requestCreateParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(CategoriesController.createCategoryAsync(requestCreateParams)).to.eventually
+        return expect(gonebusy.CategoriesController.createCategory(requestCreateParams)).to.eventually
             .be.an.instanceof(CreateCategoryResponse);
     },
     correctContent() {
-        return expect(CategoriesController.createCategoryAsync(requestCreateParams)).to.eventually
+        return expect(gonebusy.CategoriesController.createCategory(requestCreateParams)).to.eventually
             .have.property('category').and.be.a('object').and.have.property('id');
     }
 };
@@ -62,14 +61,14 @@ const getCategoryById = {
             .replyWithFile(200, `${categoriesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(CategoriesController.getCategoryByIdAsync(requestInstanceParams)).to.eventually.be.resolved;
+        return expect(gonebusy.CategoriesController.getCategoryById(requestInstanceParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(CategoriesController.getCategoryByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.CategoriesController.getCategoryById(requestInstanceParams)).to.eventually
             .be.an.instanceof(GetCategoryByIdResponse);
     },
     correctContent() {
-        return expect(CategoriesController.getCategoryByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.CategoriesController.getCategoryById(requestInstanceParams)).to.eventually
             .have.property('category').and.be.a('object').and.have.property('id').and.equal(categoryId);
     }
 };

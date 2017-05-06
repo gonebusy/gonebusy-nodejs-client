@@ -5,7 +5,6 @@ const DeleteServiceByIdResponse = require('../../../lib/Models/DeleteServiceById
 const UpdateServiceByIdResponse = require('../../../lib/Models/UpdateServiceByIdResponse');
 const GetServiceAvailableSlotsByIdResponse = require('../../../lib/Models/GetServiceAvailableSlotsByIdResponse');
 
-const ServicesController = Promise.promisifyAll(gonebusy.ServicesController);
 const servicesFixturesPath = `${fixturesPath}/services`;
 
 const indexParams = { page: 1, per_page: 10 };
@@ -19,14 +18,14 @@ const getServices = {
             .replyWithFile(200, `${servicesFixturesPath}/index.json`);
     },
     promiseResolved() {
-        return expect(ServicesController.getServicesAsync(requestIndexParams)).to.eventually.be.resolved;
+        return expect(gonebusy.ServicesController.getServices(requestIndexParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(ServicesController.getServicesAsync(requestIndexParams)).to.eventually
+        return expect(gonebusy.ServicesController.getServices(requestIndexParams)).to.eventually
             .be.an.instanceof(GetServicesResponse);
     },
     correctContent() {
-        return expect(ServicesController.getServicesAsync(requestIndexParams)).to.eventually
+        return expect(gonebusy.ServicesController.getServices(requestIndexParams)).to.eventually
             .have.property('services').and.have.lengthOf(1);
     }
 };
@@ -52,14 +51,14 @@ const createService = {
             .replyWithFile(201, `${servicesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(ServicesController.createServiceAsync(requestCreateParams)).to.eventually.be.resolved;
+        return expect(gonebusy.ServicesController.createService(requestCreateParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(ServicesController.createServiceAsync(requestCreateParams)).to.eventually
+        return expect(gonebusy.ServicesController.createService(requestCreateParams)).to.eventually
             .be.an.instanceof(CreateServiceResponse);
     },
     correctContent() {
-        return expect(ServicesController.createServiceAsync(requestCreateParams)).to.eventually
+        return expect(gonebusy.ServicesController.createService(requestCreateParams)).to.eventually
             .have.property('service').and.be.a('object').and.have.property('id');
     }
 };
@@ -74,15 +73,15 @@ const getServiceById = {
             .replyWithFile(200, `${servicesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(ServicesController.getServiceByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.ServicesController.getServiceById(requestInstanceParams)).to.eventually
             .be.resolved;
     },
     correctInstance() {
-        return expect(ServicesController.getServiceByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.ServicesController.getServiceById(requestInstanceParams)).to.eventually
             .be.an.instanceof(GetServiceByIdResponse);
     },
     correctContent() {
-        return expect(ServicesController.getServiceByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.ServicesController.getServiceById(requestInstanceParams)).to.eventually
             .have.property('service').and.be.a('object').and.have.property('id').and.equal(serviceId);
     }
 };
@@ -94,14 +93,14 @@ const deleteServiceById = {
             .replyWithFile(200, `${servicesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(ServicesController.deleteServiceByIdAsync(requestInstanceParams)).to.eventually.be.resolved;
+        return expect(gonebusy.ServicesController.deleteServiceById(requestInstanceParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(ServicesController.deleteServiceByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.ServicesController.deleteServiceById(requestInstanceParams)).to.eventually
             .be.an.instanceof(DeleteServiceByIdResponse);
     },
     correctContent() {
-        return expect(ServicesController.deleteServiceByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.ServicesController.deleteServiceById(requestInstanceParams)).to.eventually
             .have.property('service').and.be.a('object').and.have.property('id').and.equal(serviceId);
     }
 };
@@ -116,15 +115,15 @@ const updateServiceById = {
             .replyWithFile(200, `${servicesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(ServicesController.updateServiceByIdAsync(requestUpdateParams)).to.eventually
+        return expect(gonebusy.ServicesController.updateServiceById(requestUpdateParams)).to.eventually
             .be.resolved;
     },
     correctInstance() {
-        return expect(ServicesController.updateServiceByIdAsync(requestUpdateParams)).to.eventually
+        return expect(gonebusy.ServicesController.updateServiceById(requestUpdateParams)).to.eventually
             .be.an.instanceof(UpdateServiceByIdResponse);
     },
     correctContent() {
-        return expect(ServicesController.updateServiceByIdAsync(requestUpdateParams)).to.eventually
+        return expect(gonebusy.ServicesController.updateServiceById(requestUpdateParams)).to.eventually
             .have.property('service').and.be.a('object').and.have.property('id').and.equal(serviceId);
     }
 };
@@ -137,15 +136,15 @@ const getServiceAvailableSlotsById = {
             .replyWithFile(200, `${servicesFixturesPath}/available-slots.json`);
     },
     promiseResolved() {
-        return expect(ServicesController.getServiceAvailableSlotsByIdAsync(requestInstanceParams))
+        return expect(gonebusy.ServicesController.getServiceAvailableSlotsById(requestInstanceParams))
             .to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(ServicesController.getServiceAvailableSlotsByIdAsync(requestInstanceParams))
+        return expect(gonebusy.ServicesController.getServiceAvailableSlotsById(requestInstanceParams))
             .to.eventually.be.an.instanceof(GetServiceAvailableSlotsByIdResponse);
     },
     correctContent() {
-        return expect(ServicesController.getServiceAvailableSlotsByIdAsync(requestInstanceParams))
+        return expect(gonebusy.ServicesController.getServiceAvailableSlotsById(requestInstanceParams))
             .to.eventually.have.property('service').and.be.a('object').and.have.property('resources').and.be.a('array');
     }
 };

@@ -5,7 +5,6 @@ const DeleteResourceByIdResponse = require('../../../lib/Models/DeleteResourceBy
 const GetResourceByIdResponse = require('../../../lib/Models/GetResourceByIdResponse');
 const UpdateResourceByIdResponse = require('../../../lib/Models/UpdateResourceByIdResponse');
 
-const ResourcesController = Promise.promisifyAll(gonebusy.ResourcesController);
 const resourcesFixturesPath = `${fixturesPath}/resources`;
 
 const indexParams = { page: 1, per_page: 10 };
@@ -19,14 +18,14 @@ const getResources = {
             .replyWithFile(200, `${resourcesFixturesPath}/index.json`);
     },
     promiseResolved() {
-        return expect(ResourcesController.getResourcesAsync(requestIndexParams)).to.eventually.be.resolved;
+        return expect(gonebusy.ResourcesController.getResources(requestIndexParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(ResourcesController.getResourcesAsync(requestIndexParams)).to.eventually
+        return expect(gonebusy.ResourcesController.getResources(requestIndexParams)).to.eventually
             .be.an.instanceof(GetResourcesResponse);
     },
     correctContent() {
-        return expect(ResourcesController.getResourcesAsync(requestIndexParams)).to.eventually
+        return expect(gonebusy.ResourcesController.getResources(requestIndexParams)).to.eventually
             .have.property('resources').and.have.lengthOf(1);
     }
 };
@@ -39,14 +38,14 @@ const getResourceThings = {
             .replyWithFile(200, `${resourcesFixturesPath}/things/index.json`);
     },
     promiseResolved() {
-        return expect(ResourcesController.getResourceThingsAsync(requestIndexParams)).to.eventually.be.resolved;
+        return expect(gonebusy.ResourcesController.getResourceThings(requestIndexParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(ResourcesController.getResourceThingsAsync(requestIndexParams)).to.eventually
+        return expect(gonebusy.ResourcesController.getResourceThings(requestIndexParams)).to.eventually
             .be.an.instanceof(GetResourceThingsResponse);
     },
     correctContent() {
-        return expect(ResourcesController.getResourceThingsAsync(requestIndexParams)).to.eventually
+        return expect(gonebusy.ResourcesController.getResourceThings(requestIndexParams)).to.eventually
             .have.property('things').and.have.lengthOf(1);
     }
 };
@@ -62,14 +61,14 @@ const createResource = {
             .replyWithFile(201, `${resourcesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(ResourcesController.createResourceAsync(requestCreateParams)).to.eventually.be.resolved;
+        return expect(gonebusy.ResourcesController.createResource(requestCreateParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(ResourcesController.createResourceAsync(requestCreateParams)).to.eventually
+        return expect(gonebusy.ResourcesController.createResource(requestCreateParams)).to.eventually
             .be.an.instanceof(CreateResourceResponse);
     },
     correctContent() {
-        return expect(ResourcesController.createResourceAsync(requestCreateParams)).to.eventually
+        return expect(gonebusy.ResourcesController.createResource(requestCreateParams)).to.eventually
             .have.property('resource').and.be.a('object').and.have.property('id');
     }
 };
@@ -84,14 +83,14 @@ const deleteResourceById = {
             .replyWithFile(200, `${resourcesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(ResourcesController.deleteResourceByIdAsync(requestInstanceParams)).to.eventually.be.resolved;
+        return expect(gonebusy.ResourcesController.deleteResourceById(requestInstanceParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(ResourcesController.deleteResourceByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.ResourcesController.deleteResourceById(requestInstanceParams)).to.eventually
             .be.an.instanceof(DeleteResourceByIdResponse);
     },
     correctContent() {
-        return expect(ResourcesController.deleteResourceByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.ResourcesController.deleteResourceById(requestInstanceParams)).to.eventually
             .have.property('resource').and.be.a('object').and.have.property('id').and.equal(resourceId);
     }
 };
@@ -103,14 +102,14 @@ const getResourceById = {
             .replyWithFile(200, `${resourcesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(ResourcesController.getResourceByIdAsync(requestInstanceParams)).to.eventually.be.resolved;
+        return expect(gonebusy.ResourcesController.getResourceById(requestInstanceParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(ResourcesController.getResourceByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.ResourcesController.getResourceById(requestInstanceParams)).to.eventually
             .be.an.instanceof(GetResourceByIdResponse);
     },
     correctContent() {
-        return expect(ResourcesController.getResourceByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.ResourcesController.getResourceById(requestInstanceParams)).to.eventually
             .have.property('resource').and.be.a('object').and.have.property('id').and.equal(resourceId);
     }
 };
@@ -125,14 +124,14 @@ const updateResourceById = {
             .replyWithFile(200, `${resourcesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(ResourcesController.updateResourceByIdAsync(requestUpdateParams)).to.eventually.be.resolved;
+        return expect(gonebusy.ResourcesController.updateResourceById(requestUpdateParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(ResourcesController.updateResourceByIdAsync(requestUpdateParams)).to.eventually
+        return expect(gonebusy.ResourcesController.updateResourceById(requestUpdateParams)).to.eventually
             .be.an.instanceof(UpdateResourceByIdResponse);
     },
     correctContent() {
-        return expect(ResourcesController.updateResourceByIdAsync(requestUpdateParams)).to.eventually
+        return expect(gonebusy.ResourcesController.updateResourceById(requestUpdateParams)).to.eventually
             .have.property('resource').and.be.a('object').and.have.property('id').and.equal(resourceId);
     }
 };

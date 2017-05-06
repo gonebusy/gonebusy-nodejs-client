@@ -3,7 +3,6 @@ const CreateUserResponse = require('../../../lib/Models/CreateUserResponse');
 const GetUserByIdResponse = require('../../../lib/Models/GetUserByIdResponse');
 const UpdateUserByIdResponse = require('../../../lib/Models/UpdateUserByIdResponse');
 
-const UsersController = Promise.promisifyAll(gonebusy.UsersController);
 const usersFixturesPath = `${fixturesPath}/users`;
 
 const indexParams = { page: 1, per_page: 10 };
@@ -17,14 +16,14 @@ const getUsers = {
             .replyWithFile(200, `${usersFixturesPath}/index.json`);
     },
     promiseResolved() {
-        return expect(UsersController.getUsersAsync(requestIndexParams)).to.eventually.be.resolved;
+        return expect(gonebusy.UsersController.getUsers(requestIndexParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(UsersController.getUsersAsync(requestIndexParams)).to.eventually
+        return expect(gonebusy.UsersController.getUsers(requestIndexParams)).to.eventually
             .be.an.instanceof(GetUsersResponse);
     },
     correctContent() {
-        return expect(UsersController.getUsersAsync(requestIndexParams)).to.eventually
+        return expect(gonebusy.UsersController.getUsers(requestIndexParams)).to.eventually
             .have.property('users').and.have.lengthOf(1);
     }
 };
@@ -48,14 +47,14 @@ const createUser = {
             .replyWithFile(201, `${usersFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(UsersController.createUserAsync(requestCreateParams)).to.eventually.be.resolved;
+        return expect(gonebusy.UsersController.createUser(requestCreateParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(UsersController.createUserAsync(requestCreateParams)).to.eventually
+        return expect(gonebusy.UsersController.createUser(requestCreateParams)).to.eventually
             .be.an.instanceof(CreateUserResponse);
     },
     correctContent() {
-        return expect(UsersController.createUserAsync(requestCreateParams)).to.eventually
+        return expect(gonebusy.UsersController.createUser(requestCreateParams)).to.eventually
             .have.property('user').and.be.a('object').and.have.property('id');
     }
 };
@@ -70,14 +69,14 @@ const getUserById = {
             .replyWithFile(200, `${usersFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(UsersController.getUserByIdAsync(requestInstanceParams)).to.eventually.be.resolved;
+        return expect(gonebusy.UsersController.getUserById(requestInstanceParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(UsersController.getUserByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.UsersController.getUserById(requestInstanceParams)).to.eventually
             .be.an.instanceof(GetUserByIdResponse);
     },
     correctContent() {
-        return expect(UsersController.getUserByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.UsersController.getUserById(requestInstanceParams)).to.eventually
             .have.property('user').and.be.a('object').and.have.property('id').and.equal(userId);
     }
 };
@@ -92,14 +91,14 @@ const updateUserById = {
             .replyWithFile(200, `${usersFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(UsersController.updateUserByIdAsync(requestUpdateParams)).to.eventually.be.resolved;
+        return expect(gonebusy.UsersController.updateUserById(requestUpdateParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(UsersController.updateUserByIdAsync(requestUpdateParams)).to.eventually
+        return expect(gonebusy.UsersController.updateUserById(requestUpdateParams)).to.eventually
             .be.an.instanceof(UpdateUserByIdResponse);
     },
     correctContent() {
-        return expect(UsersController.updateUserByIdAsync(requestUpdateParams)).to.eventually
+        return expect(gonebusy.UsersController.updateUserById(requestUpdateParams)).to.eventually
             .have.property('user').and.be.a('object').and.have.property('id').and.equal(userId);
     }
 };

@@ -4,7 +4,6 @@ const CancelBookingByIdResponse = require('../../../lib/Models/CancelBookingById
 const UpdateBookingByIdResponse = require('../../../lib/Models/UpdateBookingByIdResponse');
 const GetBookingByIdResponse = require('../../../lib/Models/GetBookingByIdResponse');
 
-const BookingsController = Promise.promisifyAll(gonebusy.BookingsController);
 const bookingsFixturesPath = `${fixturesPath}/bookings`;
 
 const indexParams = { page: 1, per_page: 10 };
@@ -18,14 +17,14 @@ const getBookings = {
             .replyWithFile(200, `${bookingsFixturesPath}/index.json`);
     },
     promiseResolved() {
-        return expect(BookingsController.getBookingsAsync(requestIndexParams)).to.eventually.be.resolved;
+        return expect(gonebusy.BookingsController.getBookings(requestIndexParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(BookingsController.getBookingsAsync(requestIndexParams)).to.eventually
+        return expect(gonebusy.BookingsController.getBookings(requestIndexParams)).to.eventually
             .be.an.instanceof(GetBookingsResponse);
     },
     correctContent() {
-        return expect(BookingsController.getBookingsAsync(requestIndexParams)).to.eventually
+        return expect(gonebusy.BookingsController.getBookings(requestIndexParams)).to.eventually
             .have.property('bookings').and.have.lengthOf(1);
     }
 };
@@ -41,14 +40,14 @@ const createBooking = {
             .replyWithFile(201, `${bookingsFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(BookingsController.createBookingAsync(requestCreateParams)).to.eventually.be.resolved;
+        return expect(gonebusy.BookingsController.createBooking(requestCreateParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(BookingsController.createBookingAsync(requestCreateParams)).to.eventually
+        return expect(gonebusy.BookingsController.createBooking(requestCreateParams)).to.eventually
             .be.an.instanceof(CreateBookingResponse);
     },
     correctContent() {
-        return expect(BookingsController.createBookingAsync(requestCreateParams)).to.eventually
+        return expect(gonebusy.BookingsController.createBooking(requestCreateParams)).to.eventually
             .have.property('booking').and.be.a('object').and.have.property('id');
     }
 };
@@ -63,14 +62,14 @@ const cancelBookingById = {
             .replyWithFile(200, `${bookingsFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(BookingsController.cancelBookingByIdAsync(requestInstanceParams)).to.eventually.be.resolved;
+        return expect(gonebusy.BookingsController.cancelBookingById(requestInstanceParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(BookingsController.cancelBookingByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.BookingsController.cancelBookingById(requestInstanceParams)).to.eventually
             .be.an.instanceof(CancelBookingByIdResponse);
     },
     correctContent() {
-        return expect(BookingsController.cancelBookingByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.BookingsController.cancelBookingById(requestInstanceParams)).to.eventually
             .have.property('booking').and.be.a('object').and.have.property('id').and.equal(bookingId);
     }
 };
@@ -82,14 +81,14 @@ const updateBookingById = {
             .replyWithFile(200, `${bookingsFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(BookingsController.updateBookingByIdAsync(requestInstanceParams)).to.eventually.be.resolved;
+        return expect(gonebusy.BookingsController.updateBookingById(requestInstanceParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(BookingsController.updateBookingByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.BookingsController.updateBookingById(requestInstanceParams)).to.eventually
             .be.an.instanceof(UpdateBookingByIdResponse);
     },
     correctContent() {
-        return expect(BookingsController.updateBookingByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.BookingsController.updateBookingById(requestInstanceParams)).to.eventually
             .have.property('booking').and.be.a('object').and.have.property('id').and.equal(bookingId);
     }
 };
@@ -101,14 +100,14 @@ const getBookingById = {
             .replyWithFile(200, `${bookingsFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(BookingsController.getBookingByIdAsync(requestInstanceParams)).to.eventually.be.resolved;
+        return expect(gonebusy.BookingsController.getBookingById(requestInstanceParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(BookingsController.getBookingByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.BookingsController.getBookingById(requestInstanceParams)).to.eventually
             .be.an.instanceof(GetBookingByIdResponse);
     },
     correctContent() {
-        return expect(BookingsController.getBookingByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.BookingsController.getBookingById(requestInstanceParams)).to.eventually
             .have.property('booking').and.be.a('object').and.have.property('id').and.equal(bookingId);
     }
 };

@@ -3,7 +3,6 @@ const CreatePricingModelResponse = require('../../../lib/Models/CreatePricingMod
 const GetPricingModelByIdResponse = require('../../../lib/Models/GetPricingModelByIdResponse');
 const UpdatePricingModelByIdResponse = require('../../../lib/Models/UpdatePricingModelByIdResponse');
 
-const PricingModelsController = Promise.promisifyAll(gonebusy.PricingModelsController);
 const pricingFixturesPath = `${fixturesPath}/pricing_models`;
 
 const indexParams = { page: 1, per_page: 10 };
@@ -17,14 +16,14 @@ const getPricingModels = {
             .replyWithFile(200, `${pricingFixturesPath}/index.json`);
     },
     promiseResolved() {
-        return expect(PricingModelsController.getPricingModelsAsync(requestIndexParams)).to.eventually.be.resolved;
+        return expect(gonebusy.PricingModelsController.getPricingModels(requestIndexParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(PricingModelsController.getPricingModelsAsync(requestIndexParams)).to.eventually
+        return expect(gonebusy.PricingModelsController.getPricingModels(requestIndexParams)).to.eventually
             .be.an.instanceof(GetPricingModelsResponse);
     },
     correctContent() {
-        return expect(PricingModelsController.getPricingModelsAsync(requestIndexParams)).to.eventually
+        return expect(gonebusy.PricingModelsController.getPricingModels(requestIndexParams)).to.eventually
             .have.property('pricingModels').and.have.lengthOf(1);
     }
 };
@@ -40,14 +39,15 @@ const createPricingModel = {
             .replyWithFile(201, `${pricingFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(PricingModelsController.createPricingModelAsync(requestCreateParams)).to.eventually.be.resolved;
+        return expect(gonebusy.PricingModelsController.createPricingModel(requestCreateParams)).to.eventually
+            .be.resolved;
     },
     correctInstance() {
-        return expect(PricingModelsController.createPricingModelAsync(requestCreateParams)).to.eventually
+        return expect(gonebusy.PricingModelsController.createPricingModel(requestCreateParams)).to.eventually
             .be.an.instanceof(CreatePricingModelResponse);
     },
     correctContent() {
-        return expect(PricingModelsController.createPricingModelAsync(requestCreateParams)).to.eventually
+        return expect(gonebusy.PricingModelsController.createPricingModel(requestCreateParams)).to.eventually
             .have.property('pricingModel').and.be.a('object').and.have.property('id');
     }
 };
@@ -62,15 +62,15 @@ const getPricingModelById = {
             .replyWithFile(200, `${pricingFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(PricingModelsController.getPricingModelByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.PricingModelsController.getPricingModelById(requestInstanceParams)).to.eventually
             .be.resolved;
     },
     correctInstance() {
-        return expect(PricingModelsController.getPricingModelByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.PricingModelsController.getPricingModelById(requestInstanceParams)).to.eventually
             .be.an.instanceof(GetPricingModelByIdResponse);
     },
     correctContent() {
-        return expect(PricingModelsController.getPricingModelByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.PricingModelsController.getPricingModelById(requestInstanceParams)).to.eventually
             .have.property('pricingModel').and.be.a('object').and.have.property('id').and.equal(pricingModelId);
     }
 };
@@ -85,15 +85,15 @@ const updatePricingModelById = {
             .replyWithFile(200, `${pricingFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(PricingModelsController.updatePricingModelByIdAsync(requestUpdateParams)).to.eventually
+        return expect(gonebusy.PricingModelsController.updatePricingModelById(requestUpdateParams)).to.eventually
             .be.resolved;
     },
     correctInstance() {
-        return expect(PricingModelsController.updatePricingModelByIdAsync(requestUpdateParams)).to.eventually
+        return expect(gonebusy.PricingModelsController.updatePricingModelById(requestUpdateParams)).to.eventually
             .be.an.instanceof(UpdatePricingModelByIdResponse);
     },
     correctContent() {
-        return expect(PricingModelsController.updatePricingModelByIdAsync(requestUpdateParams)).to.eventually
+        return expect(gonebusy.PricingModelsController.updatePricingModelById(requestUpdateParams)).to.eventually
             .have.property('pricingModel').and.be.a('object').and.have.property('id').and.equal(pricingModelId);
     }
 };

@@ -6,7 +6,6 @@ const CreateScheduleTimeWindowResponse = require('../../../lib/Models/CreateSche
 const DeleteScheduleTimeWindowByIdResponse = require('../../../lib/Models/DeleteScheduleTimeWindowByIdResponse');
 const UpdateScheduleTimeWindowByIdResponse = require('../../../lib/Models/UpdateScheduleTimeWindowByIdResponse');
 
-const SchedulesController = Promise.promisifyAll(gonebusy.SchedulesController);
 const schedulesFixturesPath = `${fixturesPath}/schedules`;
 
 const indexParams = { page: 1, per_page: 10 };
@@ -20,14 +19,14 @@ const getSchedules = {
             .replyWithFile(200, `${schedulesFixturesPath}/index.json`);
     },
     promiseResolved() {
-        return expect(SchedulesController.getSchedulesAsync(requestIndexParams)).to.eventually.be.resolved;
+        return expect(gonebusy.SchedulesController.getSchedules(requestIndexParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(SchedulesController.getSchedulesAsync(requestIndexParams)).to.eventually
+        return expect(gonebusy.SchedulesController.getSchedules(requestIndexParams)).to.eventually
             .be.an.instanceof(GetSchedulesResponse);
     },
     correctContent() {
-        return expect(SchedulesController.getSchedulesAsync(requestIndexParams)).to.eventually
+        return expect(gonebusy.SchedulesController.getSchedules(requestIndexParams)).to.eventually
             .have.property('schedules').and.have.lengthOf(1);
     }
 };
@@ -55,14 +54,14 @@ const createSchedule = {
             .replyWithFile(201, `${schedulesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(SchedulesController.createScheduleAsync(requestCreateParams)).to.eventually.be.resolved;
+        return expect(gonebusy.SchedulesController.createSchedule(requestCreateParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(SchedulesController.createScheduleAsync(requestCreateParams)).to.eventually
+        return expect(gonebusy.SchedulesController.createSchedule(requestCreateParams)).to.eventually
             .be.an.instanceof(CreateScheduleResponse);
     },
     correctContent() {
-        return expect(SchedulesController.createScheduleAsync(requestCreateParams)).to.eventually
+        return expect(gonebusy.SchedulesController.createSchedule(requestCreateParams)).to.eventually
             .have.property('schedule').and.be.a('object').and.have.property('id');
     }
 };
@@ -77,14 +76,14 @@ const deleteScheduleById = {
             .replyWithFile(200, `${schedulesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(SchedulesController.deleteScheduleByIdAsync(requestInstanceParams)).to.eventually.be.resolved;
+        return expect(gonebusy.SchedulesController.deleteScheduleById(requestInstanceParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(SchedulesController.deleteScheduleByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.SchedulesController.deleteScheduleById(requestInstanceParams)).to.eventually
             .be.an.instanceof(DeleteScheduleByIdResponse);
     },
     correctContent() {
-        return expect(SchedulesController.deleteScheduleByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.SchedulesController.deleteScheduleById(requestInstanceParams)).to.eventually
             .have.property('schedule').and.be.a('object').and.have.property('id').and.equal(scheduleId);
     }
 };
@@ -96,14 +95,14 @@ const getScheduleById = {
             .replyWithFile(200, `${schedulesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(SchedulesController.getScheduleByIdAsync(requestInstanceParams)).to.eventually.be.resolved;
+        return expect(gonebusy.SchedulesController.getScheduleById(requestInstanceParams)).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(SchedulesController.getScheduleByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.SchedulesController.getScheduleById(requestInstanceParams)).to.eventually
             .be.an.instanceof(GetScheduleByIdResponse);
     },
     correctContent() {
-        return expect(SchedulesController.getScheduleByIdAsync(requestInstanceParams)).to.eventually
+        return expect(gonebusy.SchedulesController.getScheduleById(requestInstanceParams)).to.eventually
             .have.property('schedule').and.be.a('object').and.have.property('id').and.equal(scheduleId);
     }
 };
@@ -120,16 +119,16 @@ const createScheduleTimeWindow = {
             .replyWithFile(201, `${schedulesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(SchedulesController.createScheduleTimeWindowAsync(requestCreateTimeWindowParams)).to.eventually
-            .be.resolved;
+        return expect(gonebusy.SchedulesController.createScheduleTimeWindow(requestCreateTimeWindowParams))
+            .to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(SchedulesController.createScheduleTimeWindowAsync(requestCreateTimeWindowParams)).to.eventually
-            .be.an.instanceof(CreateScheduleTimeWindowResponse);
+        return expect(gonebusy.SchedulesController.createScheduleTimeWindow(requestCreateTimeWindowParams))
+            .to.eventually.be.an.instanceof(CreateScheduleTimeWindowResponse);
     },
     correctContent() {
-        return expect(SchedulesController.createScheduleTimeWindowAsync(requestCreateTimeWindowParams)).to.eventually
-            .have.property('schedule').and.be.a('object').and.have.property('id');
+        return expect(gonebusy.SchedulesController.createScheduleTimeWindow(requestCreateTimeWindowParams))
+            .to.eventually.have.property('schedule').and.be.a('object').and.have.property('id');
     }
 };
 
@@ -144,15 +143,15 @@ const deleteScheduleTimeWindowById = {
             .replyWithFile(200, `${schedulesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(SchedulesController.deleteScheduleTimeWindowByIdAsync(requestTimeWindowInstanceParams))
+        return expect(gonebusy.SchedulesController.deleteScheduleTimeWindowById(requestTimeWindowInstanceParams))
             .to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(SchedulesController.deleteScheduleTimeWindowByIdAsync(requestTimeWindowInstanceParams))
+        return expect(gonebusy.SchedulesController.deleteScheduleTimeWindowById(requestTimeWindowInstanceParams))
             .to.eventually.be.an.instanceof(DeleteScheduleTimeWindowByIdResponse);
     },
     correctContent() {
-        return expect(SchedulesController.deleteScheduleTimeWindowByIdAsync(requestTimeWindowInstanceParams))
+        return expect(gonebusy.SchedulesController.deleteScheduleTimeWindowById(requestTimeWindowInstanceParams))
             .to.eventually.have.property('schedule').and.be.a('object').and.have.property('id').and.equal(scheduleId);
     }
 };
@@ -170,15 +169,15 @@ const updateScheduleTimeWindowById = {
             .replyWithFile(200, `${schedulesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(SchedulesController.updateScheduleTimeWindowByIdAsync(requestUpdateTimeWindowParams))
+        return expect(gonebusy.SchedulesController.updateScheduleTimeWindowById(requestUpdateTimeWindowParams))
             .to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(SchedulesController.updateScheduleTimeWindowByIdAsync(requestUpdateTimeWindowParams))
+        return expect(gonebusy.SchedulesController.updateScheduleTimeWindowById(requestUpdateTimeWindowParams))
             .to.eventually.be.an.instanceof(UpdateScheduleTimeWindowByIdResponse);
     },
     correctContent() {
-        return expect(SchedulesController.updateScheduleTimeWindowByIdAsync(requestUpdateTimeWindowParams))
+        return expect(gonebusy.SchedulesController.updateScheduleTimeWindowById(requestUpdateTimeWindowParams))
             .to.eventually.have.property('schedule').and.be.a('object').and.have.property('id').and.equal(scheduleId);
     }
 };
