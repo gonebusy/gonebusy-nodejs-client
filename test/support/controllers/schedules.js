@@ -1,3 +1,4 @@
+const SchedulesController = require('../../../lib/Controllers/SchedulesController');
 const GetSchedulesResponse = require('../../../lib/Models/GetSchedulesResponse');
 const CreateScheduleResponse = require('../../../lib/Models/CreateScheduleResponse');
 const DeleteScheduleByIdResponse = require('../../../lib/Models/DeleteScheduleByIdResponse');
@@ -9,7 +10,6 @@ const UpdateScheduleTimeWindowByIdResponse = require('../../../lib/Models/Update
 const schedulesFixturesPath = `${fixturesPath}/schedules`;
 
 const indexParams = { page: 1, per_page: 10 };
-const requestIndexParams = _.chain(configuration).pick('authorization').assign(indexParams).value();
 
 const getSchedules = {
     nockRequest() {
@@ -20,18 +20,18 @@ const getSchedules = {
     },
     promiseResolved() {
         return expect(
-            gonebusy.SchedulesController.getSchedules(requestIndexParams)
-                    .then(() => {})
-                    .catch(() => {})
+            SchedulesController.getSchedules(configuration.authorization, indexParams.page, indexParams.per_page)
         ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.SchedulesController.getSchedules(requestIndexParams)).to.eventually
-            .be.an.instanceof(GetSchedulesResponse);
+        return expect(
+            SchedulesController.getSchedules(configuration.authorization, indexParams.page, indexParams.per_page)
+        ).to.eventually.be.an.instanceof(GetSchedulesResponse);
     },
     correctContent() {
-        return expect(gonebusy.SchedulesController.getSchedules(requestIndexParams)).to.eventually
-            .have.property('schedules').and.have.lengthOf(1);
+        return expect(
+            SchedulesController.getSchedules(configuration.authorization, indexParams.page, indexParams.per_page)
+        ).to.eventually.have.property('schedules').and.have.lengthOf(1);
     }
 };
 
@@ -47,9 +47,7 @@ const createTimeWindowParams = {
     occurrence: '4th_to_last',
     date_recurs_by: 'day_in_month'
 };
-const createParams = _.assign({ service_id: 0, user_id: 0, resource_id: 0 }, createTimeWindowParams);
-const requestCreateParams = _.chain(configuration).pick('authorization').assign({ createScheduleBody: createParams })
-    .value();
+const createParams = _.assign({ service_id: 0, user_id: 123, resource_id: 0 }, createTimeWindowParams);
 
 const createSchedule = {
     nockRequest() {
@@ -59,23 +57,22 @@ const createSchedule = {
     },
     promiseResolved() {
         return expect(
-            gonebusy.SchedulesController.createSchedule(requestCreateParams)
-                    .then(() => {})
-                    .catch(() => {})
+            SchedulesController.createSchedule(configuration.authorization, createParams)
         ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.SchedulesController.createSchedule(requestCreateParams)).to.eventually
-            .be.an.instanceof(CreateScheduleResponse);
+        return expect(
+            SchedulesController.createSchedule(configuration.authorization, createParams)
+        ).to.eventually.be.an.instanceof(CreateScheduleResponse);
     },
     correctContent() {
-        return expect(gonebusy.SchedulesController.createSchedule(requestCreateParams)).to.eventually
-            .have.property('schedule').and.be.a('object').and.have.property('id');
+        return expect(
+            SchedulesController.createSchedule(configuration.authorization, createParams)
+        ).to.eventually.have.property('schedule').and.be.a('object').and.have.property('id');
     }
 };
 
-const scheduleId = 0;
-const requestInstanceParams = _.chain(configuration).pick('authorization').assign({ id: scheduleId }).value();
+const scheduleId = 123;
 
 const deleteScheduleById = {
     nockRequest() {
@@ -84,15 +81,19 @@ const deleteScheduleById = {
             .replyWithFile(200, `${schedulesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.SchedulesController.deleteScheduleById(requestInstanceParams)).to.eventually.be.resolved;
+        return expect(
+            SchedulesController.deleteScheduleById(configuration.authorization, scheduleId)
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.SchedulesController.deleteScheduleById(requestInstanceParams)).to.eventually
-            .be.an.instanceof(DeleteScheduleByIdResponse);
+        return expect(
+            SchedulesController.deleteScheduleById(configuration.authorization, scheduleId)
+        ).to.eventually.be.an.instanceof(DeleteScheduleByIdResponse);
     },
     correctContent() {
-        return expect(gonebusy.SchedulesController.deleteScheduleById(requestInstanceParams)).to.eventually
-            .have.property('schedule').and.be.a('object').and.have.property('id').and.equal(scheduleId);
+        return expect(
+            SchedulesController.deleteScheduleById(configuration.authorization, scheduleId)
+        ).to.eventually.have.property('schedule').and.be.a('object').and.have.property('id').and.equal(scheduleId);
     }
 };
 
@@ -103,22 +104,21 @@ const getScheduleById = {
             .replyWithFile(200, `${schedulesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.SchedulesController.getScheduleById(requestInstanceParams)).to.eventually.be.resolved;
+        return expect(
+            SchedulesController.getScheduleById(configuration.authorization, scheduleId)
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.SchedulesController.getScheduleById(requestInstanceParams)).to.eventually
-            .be.an.instanceof(GetScheduleByIdResponse);
+        return expect(
+            SchedulesController.getScheduleById(configuration.authorization, scheduleId)
+        ).to.eventually.be.an.instanceof(GetScheduleByIdResponse);
     },
     correctContent() {
-        return expect(gonebusy.SchedulesController.getScheduleById(requestInstanceParams)).to.eventually
-            .have.property('schedule').and.be.a('object').and.have.property('id').and.equal(scheduleId);
+        return expect(
+            SchedulesController.getScheduleById(configuration.authorization, scheduleId)
+        ).to.eventually.have.property('schedule').and.be.a('object').and.have.property('id').and.equal(scheduleId);
     }
 };
-
-const requestCreateTimeWindowParams = _.chain(configuration).pick('authorization').assign({
-    createScheduleTimeWindowBody: createTimeWindowParams,
-    id: scheduleId
-}).value();
 
 const createScheduleTimeWindow = {
     nockRequest() {
@@ -127,66 +127,76 @@ const createScheduleTimeWindow = {
             .replyWithFile(201, `${schedulesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.SchedulesController.createScheduleTimeWindow(requestCreateTimeWindowParams))
-            .to.eventually.be.resolved;
+        return expect(
+            SchedulesController.createScheduleTimeWindow(
+                configuration.authorization, scheduleId, createTimeWindowParams)
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.SchedulesController.createScheduleTimeWindow(requestCreateTimeWindowParams))
-            .to.eventually.be.an.instanceof(CreateScheduleTimeWindowResponse);
+        return expect(
+            SchedulesController.createScheduleTimeWindow(
+                configuration.authorization, scheduleId, createTimeWindowParams)
+        ).to.eventually.be.an.instanceof(CreateScheduleTimeWindowResponse);
     },
     correctContent() {
-        return expect(gonebusy.SchedulesController.createScheduleTimeWindow(requestCreateTimeWindowParams))
-            .to.eventually.have.property('schedule').and.be.a('object').and.have.property('id');
+        return expect(
+            SchedulesController.createScheduleTimeWindow(
+                configuration.authorization, scheduleId, createTimeWindowParams)
+        ).to.eventually.have.property('schedule').and.be.a('object').and.have.property('id');
     }
 };
 
 
-const scheduleTimeWindowId = 0;
-const requestTimeWindowInstanceParams = _.assign({ timeWindowId: scheduleTimeWindowId }, requestInstanceParams);
+const timeWindowId = 456;
 
 const deleteScheduleTimeWindowById = {
     nockRequest() {
         nock(configuration.getBaseUri())
-            .delete(`/schedules/${scheduleId}/time_windows/${scheduleTimeWindowId}`)
+            .delete(`/schedules/${scheduleId}/time_windows/${timeWindowId}`)
             .replyWithFile(200, `${schedulesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.SchedulesController.deleteScheduleTimeWindowById(requestTimeWindowInstanceParams))
-            .to.eventually.be.resolved;
+        return expect(
+            SchedulesController.deleteScheduleTimeWindowById(configuration.authorization, scheduleId, timeWindowId)
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.SchedulesController.deleteScheduleTimeWindowById(requestTimeWindowInstanceParams))
-            .to.eventually.be.an.instanceof(DeleteScheduleTimeWindowByIdResponse);
+        return expect(
+            SchedulesController.deleteScheduleTimeWindowById(configuration.authorization, scheduleId, timeWindowId)
+        ).to.eventually.be.an.instanceof(DeleteScheduleTimeWindowByIdResponse);
     },
     correctContent() {
-        return expect(gonebusy.SchedulesController.deleteScheduleTimeWindowById(requestTimeWindowInstanceParams))
-            .to.eventually.have.property('schedule').and.be.a('object').and.have.property('id').and.equal(scheduleId);
+        return expect(
+            SchedulesController.deleteScheduleTimeWindowById(configuration.authorization, scheduleId, timeWindowId)
+        ).to.eventually.have.property('schedule').and.be.a('object').and.have.property('id').and.equal(scheduleId);
     }
 };
 
 const updateTimeWindowParams = createTimeWindowParams;
-const requestUpdateTimeWindowParams = _.assign(
-    { updateScheduleTimeWindowByIdBody: createTimeWindowParams },
-    requestTimeWindowInstanceParams
-);
 
 const updateScheduleTimeWindowById = {
     nockRequest() {
         nock(configuration.getBaseUri())
-            .put(`/schedules/${scheduleId}/time_windows/${scheduleTimeWindowId}`, updateTimeWindowParams)
+            .put(`/schedules/${scheduleId}/time_windows/${timeWindowId}`, updateTimeWindowParams)
             .replyWithFile(200, `${schedulesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.SchedulesController.updateScheduleTimeWindowById(requestUpdateTimeWindowParams))
-            .to.eventually.be.resolved;
+        return expect(
+            SchedulesController.updateScheduleTimeWindowById(
+                configuration.authorization, scheduleId, timeWindowId, updateTimeWindowParams)
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.SchedulesController.updateScheduleTimeWindowById(requestUpdateTimeWindowParams))
-            .to.eventually.be.an.instanceof(UpdateScheduleTimeWindowByIdResponse);
+        return expect(
+            SchedulesController.updateScheduleTimeWindowById(
+                configuration.authorization, scheduleId, timeWindowId, updateTimeWindowParams)
+        ).to.eventually.be.an.instanceof(UpdateScheduleTimeWindowByIdResponse);
     },
     correctContent() {
-        return expect(gonebusy.SchedulesController.updateScheduleTimeWindowById(requestUpdateTimeWindowParams))
-            .to.eventually.have.property('schedule').and.be.a('object').and.have.property('id').and.equal(scheduleId);
+        return expect(
+            SchedulesController.updateScheduleTimeWindowById(
+                configuration.authorization, scheduleId, timeWindowId, updateTimeWindowParams)
+        ).to.eventually.have.property('schedule').and.be.a('object').and.have.property('id').and.equal(scheduleId);
     }
 };
 

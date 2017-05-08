@@ -43,12 +43,6 @@ Then try the following:
     var authorization = 'Token ac98ed08b5b0a9e7c43a233aeba841ce'; // Default Sandbox token
     ```
 
-1. Require Bluebird:
-
-    ```js
-    var Promise = require('bluebird').Promise;
-    ```
-    
 1. Get a list of Services for the current user:
 
     ```js

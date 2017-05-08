@@ -1,9 +1,9 @@
+const SearchController = require('../../../lib/Controllers/SearchController');
 const SearchQueryResponse = require('../../../lib/Models/SearchQueryResponse');
 
 const searchFixturesPath = `${fixturesPath}/search`;
 
 const query = 'text';
-const requestParams = _.chain(configuration).pick('authorization').assign({ query }).value();
 
 const searchQuery = {
     nockRequest() {
@@ -13,18 +13,18 @@ const searchQuery = {
     },
     promiseResolved() {
         return expect(
-            gonebusy.SearchController.searchQuery(requestParams)
-                    .then(() => {})
-                    .catch(() => {})
+            SearchController.searchQuery(configuration.authorization, query)
         ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.SearchController.searchQuery(requestParams)).to.eventually
-            .be.an.instanceof(SearchQueryResponse);
+        return expect(
+            SearchController.searchQuery(configuration.authorization, query)
+        ).to.eventually.be.an.instanceof(SearchQueryResponse);
     },
     correctContent() {
-        return expect(gonebusy.SearchController.searchQuery(requestParams)).to.eventually
-            .have.property('results').and.have.all.keys(['services', 'users']);
+        return expect(
+            SearchController.searchQuery(configuration.authorization, query)
+        ).to.eventually.have.property('results').and.have.all.keys(['services', 'users']);
     }
 };
 

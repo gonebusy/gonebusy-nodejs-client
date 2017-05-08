@@ -1,3 +1,4 @@
+const ResourcesController = require('../../../lib/Controllers/ResourcesController');
 const GetResourcesResponse = require('../../../lib/Models/GetResourcesResponse');
 const GetResourceThingsResponse = require('../../../lib/Models/GetResourceThingsResponse');
 const CreateResourceResponse = require('../../../lib/Models/CreateResourceResponse');
@@ -8,7 +9,6 @@ const UpdateResourceByIdResponse = require('../../../lib/Models/UpdateResourceBy
 const resourcesFixturesPath = `${fixturesPath}/resources`;
 
 const indexParams = { page: 1, per_page: 10 };
-const requestIndexParams = _.chain(configuration).pick('authorization').assign(indexParams).value();
 
 const getResources = {
     nockRequest() {
@@ -19,18 +19,18 @@ const getResources = {
     },
     promiseResolved() {
         return expect(
-            gonebusy.ResourcesController.getResources(requestIndexParams)
-                    .then(() => {})
-                    .catch(() => {})
+            ResourcesController.getResources(configuration.authorization, indexParams.page, indexParams.per_page)
         ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.ResourcesController.getResources(requestIndexParams)).to.eventually
-            .be.an.instanceof(GetResourcesResponse);
+        return expect(
+            ResourcesController.getResources(configuration.authorization, indexParams.page, indexParams.per_page)
+        ).to.eventually.be.an.instanceof(GetResourcesResponse);
     },
     correctContent() {
-        return expect(gonebusy.ResourcesController.getResources(requestIndexParams)).to.eventually
-            .have.property('resources').and.have.lengthOf(1);
+        return expect(
+            ResourcesController.getResources(configuration.authorization, indexParams.page, indexParams.per_page)
+        ).to.eventually.have.property('resources').and.have.lengthOf(1);
     }
 };
 
@@ -43,24 +43,22 @@ const getResourceThings = {
     },
     promiseResolved() {
         return expect(
-            gonebusy.ResourcesController.getResourceThings(requestIndexParams)
-                    .then(() => {})
-                    .catch(() => {})
+            ResourcesController.getResourceThings(configuration.authorization, indexParams.page, indexParams.per_page)
         ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.ResourcesController.getResourceThings(requestIndexParams)).to.eventually
-            .be.an.instanceof(GetResourceThingsResponse);
+        return expect(
+            ResourcesController.getResourceThings(configuration.authorization, indexParams.page, indexParams.per_page)
+        ).to.eventually.be.an.instanceof(GetResourceThingsResponse);
     },
     correctContent() {
-        return expect(gonebusy.ResourcesController.getResourceThings(requestIndexParams)).to.eventually
-            .have.property('things').and.have.lengthOf(1);
+        return expect(
+            ResourcesController.getResourceThings(configuration.authorization, indexParams.page, indexParams.per_page)
+        ).to.eventually.have.property('things').and.have.lengthOf(1);
     }
 };
 
 const createParams = { service_id: 0, date: 'string', time: 'string', resource_id: 0, duration: 0, user_id: 0 };
-const requestCreateParams = _.chain(configuration).pick('authorization').assign({ createResourceBody: createParams })
-    .value();
 
 const createResource = {
     nockRequest() {
@@ -70,23 +68,22 @@ const createResource = {
     },
     promiseResolved() {
         return expect(
-            gonebusy.ResourcesController.createResource(requestCreateParams)
-                    .then(() => {})
-                    .catch(() => {})
+            ResourcesController.createResource(configuration.authorization, createParams)
         ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.ResourcesController.createResource(requestCreateParams)).to.eventually
-            .be.an.instanceof(CreateResourceResponse);
+        return expect(
+            ResourcesController.createResource(configuration.authorization, createParams)
+        ).to.eventually.be.an.instanceof(CreateResourceResponse);
     },
     correctContent() {
-        return expect(gonebusy.ResourcesController.createResource(requestCreateParams)).to.eventually
-            .have.property('resource').and.be.a('object').and.have.property('id');
+        return expect(
+            ResourcesController.createResource(configuration.authorization, createParams)
+        ).to.eventually.have.property('resource').and.be.a('object').and.have.property('id');
     }
 };
 
-const resourceId = 0;
-const requestInstanceParams = _.chain(configuration).pick('authorization').assign({ id: resourceId }).value();
+const resourceId = 123;
 
 const deleteResourceById = {
     nockRequest() {
@@ -95,15 +92,19 @@ const deleteResourceById = {
             .replyWithFile(200, `${resourcesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.ResourcesController.deleteResourceById(requestInstanceParams)).to.eventually.be.resolved;
+        return expect(
+            ResourcesController.deleteResourceById(configuration.authorization, resourceId)
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.ResourcesController.deleteResourceById(requestInstanceParams)).to.eventually
-            .be.an.instanceof(DeleteResourceByIdResponse);
+        return expect(
+            ResourcesController.deleteResourceById(configuration.authorization, resourceId)
+        ).to.eventually.be.an.instanceof(DeleteResourceByIdResponse);
     },
     correctContent() {
-        return expect(gonebusy.ResourcesController.deleteResourceById(requestInstanceParams)).to.eventually
-            .have.property('resource').and.be.a('object').and.have.property('id').and.equal(resourceId);
+        return expect(
+            ResourcesController.deleteResourceById(configuration.authorization, resourceId)
+        ).to.eventually.have.property('resource').and.be.a('object').and.have.property('id').and.equal(resourceId);
     }
 };
 
@@ -114,20 +115,23 @@ const getResourceById = {
             .replyWithFile(200, `${resourcesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.ResourcesController.getResourceById(requestInstanceParams)).to.eventually.be.resolved;
+        return expect(
+            ResourcesController.getResourceById(configuration.authorization, resourceId)
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.ResourcesController.getResourceById(requestInstanceParams)).to.eventually
-            .be.an.instanceof(GetResourceByIdResponse);
+        return expect(
+            ResourcesController.getResourceById(configuration.authorization, resourceId)
+        ).to.eventually.be.an.instanceof(GetResourceByIdResponse);
     },
     correctContent() {
-        return expect(gonebusy.ResourcesController.getResourceById(requestInstanceParams)).to.eventually
-            .have.property('resource').and.be.a('object').and.have.property('id').and.equal(resourceId);
+        return expect(
+            ResourcesController.getResourceById(configuration.authorization, resourceId)
+        ).to.eventually.have.property('resource').and.be.a('object').and.have.property('id').and.equal(resourceId);
     }
 };
 
 const updateParams = { name: 'string', description: 'string', capacity: 0, gender: 'F', thing_type_id: 0 };
-const requestUpdateParams = _.assign({ updateResourceByIdBody: updateParams }, requestInstanceParams);
 
 const updateResourceById = {
     nockRequest() {
@@ -136,15 +140,19 @@ const updateResourceById = {
             .replyWithFile(200, `${resourcesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.ResourcesController.updateResourceById(requestUpdateParams)).to.eventually.be.resolved;
+        return expect(
+            ResourcesController.updateResourceById(configuration.authorization, resourceId, updateParams)
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.ResourcesController.updateResourceById(requestUpdateParams)).to.eventually
-            .be.an.instanceof(UpdateResourceByIdResponse);
+        return expect(
+            ResourcesController.updateResourceById(configuration.authorization, resourceId, updateParams)
+        ).to.eventually.be.an.instanceof(UpdateResourceByIdResponse);
     },
     correctContent() {
-        return expect(gonebusy.ResourcesController.updateResourceById(requestUpdateParams)).to.eventually
-            .have.property('resource').and.be.a('object').and.have.property('id').and.equal(resourceId);
+        return expect(
+            ResourcesController.updateResourceById(configuration.authorization, resourceId, updateParams)
+        ).to.eventually.have.property('resource').and.be.a('object').and.have.property('id').and.equal(resourceId);
     }
 };
 

@@ -1,3 +1,4 @@
+const ServicesController = require('../../../lib/Controllers/ServicesController');
 const GetServicesResponse = require('../../../lib/Models/GetServicesResponse');
 const CreateServiceResponse = require('../../../lib/Models/CreateServiceResponse');
 const GetServiceByIdResponse = require('../../../lib/Models/GetServiceByIdResponse');
@@ -8,7 +9,6 @@ const GetServiceAvailableSlotsByIdResponse = require('../../../lib/Models/GetSer
 const servicesFixturesPath = `${fixturesPath}/services`;
 
 const indexParams = { page: 1, per_page: 10 };
-const requestIndexParams = _.chain(configuration).pick('authorization').assign(indexParams).value();
 
 const getServices = {
     nockRequest() {
@@ -19,18 +19,18 @@ const getServices = {
     },
     promiseResolved() {
         return expect(
-            gonebusy.ServicesController.getServices(requestIndexParams)
-                    .then(() => {})
-                    .catch(() => {})
+            ServicesController.getServices(configuration.authorization, indexParams.page, indexParams.per_page)
         ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.ServicesController.getServices(requestIndexParams)).to.eventually
-            .be.an.instanceof(GetServicesResponse);
+        return expect(
+            ServicesController.getServices(configuration.authorization, indexParams.page, indexParams.per_page)
+        ).to.eventually.be.an.instanceof(GetServicesResponse);
     },
     correctContent() {
-        return expect(gonebusy.ServicesController.getServices(requestIndexParams)).to.eventually
-            .have.property('services').and.have.lengthOf(1);
+        return expect(
+            ServicesController.getServices(configuration.authorization, indexParams.page, indexParams.per_page)
+        ).to.eventually.have.property('services').and.have.lengthOf(1);
     }
 };
 
@@ -45,8 +45,6 @@ const createParams = {
     resources: 'string',
     categories: 'string'
 };
-const requestCreateParams = _.chain(configuration).pick('authorization').assign({ createServiceBody: createParams })
-    .value();
 
 const createService = {
     nockRequest() {
@@ -56,23 +54,22 @@ const createService = {
     },
     promiseResolved() {
         return expect(
-            gonebusy.ServicesController.createService(requestCreateParams)
-                    .then(() => {})
-                    .catch(() => {})
+            ServicesController.createService(configuration.authorization, createParams)
         ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.ServicesController.createService(requestCreateParams)).to.eventually
-            .be.an.instanceof(CreateServiceResponse);
+        return expect(
+            ServicesController.createService(configuration.authorization, createParams)
+        ).to.eventually.be.an.instanceof(CreateServiceResponse);
     },
     correctContent() {
-        return expect(gonebusy.ServicesController.createService(requestCreateParams)).to.eventually
-            .have.property('service').and.be.a('object').and.have.property('id');
+        return expect(
+            ServicesController.createService(configuration.authorization, createParams)
+        ).to.eventually.have.property('service').and.be.a('object').and.have.property('id');
     }
 };
 
-const serviceId = 0;
-const requestInstanceParams = _.chain(configuration).pick('authorization').assign({ id: serviceId }).value();
+const serviceId = 123;
 
 const getServiceById = {
     nockRequest() {
@@ -81,16 +78,19 @@ const getServiceById = {
             .replyWithFile(200, `${servicesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.ServicesController.getServiceById(requestInstanceParams)).to.eventually
-            .be.resolved;
+        return expect(
+            ServicesController.getServiceById(configuration.authorization, serviceId)
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.ServicesController.getServiceById(requestInstanceParams)).to.eventually
-            .be.an.instanceof(GetServiceByIdResponse);
+        return expect(
+            ServicesController.getServiceById(configuration.authorization, serviceId)
+        ).to.eventually.be.an.instanceof(GetServiceByIdResponse);
     },
     correctContent() {
-        return expect(gonebusy.ServicesController.getServiceById(requestInstanceParams)).to.eventually
-            .have.property('service').and.be.a('object').and.have.property('id').and.equal(serviceId);
+        return expect(
+            ServicesController.getServiceById(configuration.authorization, serviceId)
+        ).to.eventually.have.property('service').and.be.a('object').and.have.property('id').and.equal(serviceId);
     }
 };
 
@@ -101,20 +101,23 @@ const deleteServiceById = {
             .replyWithFile(200, `${servicesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.ServicesController.deleteServiceById(requestInstanceParams)).to.eventually.be.resolved;
+        return expect(
+            ServicesController.deleteServiceById(configuration.authorization, serviceId)
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.ServicesController.deleteServiceById(requestInstanceParams)).to.eventually
-            .be.an.instanceof(DeleteServiceByIdResponse);
+        return expect(
+            ServicesController.deleteServiceById(configuration.authorization, serviceId)
+        ).to.eventually.be.an.instanceof(DeleteServiceByIdResponse);
     },
     correctContent() {
-        return expect(gonebusy.ServicesController.deleteServiceById(requestInstanceParams)).to.eventually
-            .have.property('service').and.be.a('object').and.have.property('id').and.equal(serviceId);
+        return expect(
+            ServicesController.deleteServiceById(configuration.authorization, serviceId)
+        ).to.eventually.have.property('service').and.be.a('object').and.have.property('id').and.equal(serviceId);
     }
 };
 
 const updateParams = _.omit(createParams, 'user_id');
-const requestUpdateParams = _.assign({ updateServiceByIdBody: updateParams }, requestInstanceParams);
 
 const updateServiceById = {
     nockRequest() {
@@ -123,16 +126,19 @@ const updateServiceById = {
             .replyWithFile(200, `${servicesFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.ServicesController.updateServiceById(requestUpdateParams)).to.eventually
-            .be.resolved;
+        return expect(
+            ServicesController.updateServiceById(configuration.authorization, serviceId, updateParams)
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.ServicesController.updateServiceById(requestUpdateParams)).to.eventually
-            .be.an.instanceof(UpdateServiceByIdResponse);
+        return expect(
+            ServicesController.updateServiceById(configuration.authorization, serviceId, updateParams)
+        ).to.eventually.be.an.instanceof(UpdateServiceByIdResponse);
     },
     correctContent() {
-        return expect(gonebusy.ServicesController.updateServiceById(requestUpdateParams)).to.eventually
-            .have.property('service').and.be.a('object').and.have.property('id').and.equal(serviceId);
+        return expect(
+            ServicesController.updateServiceById(configuration.authorization, serviceId, updateParams)
+        ).to.eventually.have.property('service').and.be.a('object').and.have.property('id').and.equal(serviceId);
     }
 };
 
@@ -144,16 +150,19 @@ const getServiceAvailableSlotsById = {
             .replyWithFile(200, `${servicesFixturesPath}/available-slots.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.ServicesController.getServiceAvailableSlotsById(requestInstanceParams))
-            .to.eventually.be.resolved;
+        return expect(
+            ServicesController.getServiceAvailableSlotsById(configuration.authorization, serviceId)
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.ServicesController.getServiceAvailableSlotsById(requestInstanceParams))
-            .to.eventually.be.an.instanceof(GetServiceAvailableSlotsByIdResponse);
+        return expect(
+            ServicesController.getServiceAvailableSlotsById(configuration.authorization, serviceId)
+        ).to.eventually.be.an.instanceof(GetServiceAvailableSlotsByIdResponse);
     },
     correctContent() {
-        return expect(gonebusy.ServicesController.getServiceAvailableSlotsById(requestInstanceParams))
-            .to.eventually.have.property('service').and.be.a('object').and.have.property('resources').and.be.a('array');
+        return expect(
+            ServicesController.getServiceAvailableSlotsById(configuration.authorization, serviceId)
+        ).to.eventually.have.property('service').and.be.a('object').and.have.property('resources').and.be.a('array');
     }
 };
 

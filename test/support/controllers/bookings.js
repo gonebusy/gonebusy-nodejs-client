@@ -1,3 +1,4 @@
+const BookingsController = require('../../../lib/Controllers/BookingsController');
 const GetBookingsResponse = require('../../../lib/Models/GetBookingsResponse');
 const CreateBookingResponse = require('../../../lib/Models/CreateBookingResponse');
 const CancelBookingByIdResponse = require('../../../lib/Models/CancelBookingByIdResponse');
@@ -7,7 +8,6 @@ const GetBookingByIdResponse = require('../../../lib/Models/GetBookingByIdRespon
 const bookingsFixturesPath = `${fixturesPath}/bookings`;
 
 const indexParams = { page: 1, per_page: 10 };
-const requestIndexParams = _.chain(configuration).pick('authorization').assign(indexParams).value();
 
 const getBookings = {
     nockRequest() {
@@ -18,24 +18,22 @@ const getBookings = {
     },
     promiseResolved() {
         return expect(
-            gonebusy.BookingsController.getBookings(requestIndexParams)
-                    .then(() => {})
-                    .catch(() => {})
+            BookingsController.getBookings(configuration.authorization, indexParams.page, indexParams.per_page)
         ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.BookingsController.getBookings(requestIndexParams)).to.eventually
-            .be.an.instanceof(GetBookingsResponse);
+        return expect(
+            BookingsController.getBookings(configuration.authorization, indexParams.page, indexParams.per_page)
+        ).to.eventually.be.an.instanceof(GetBookingsResponse);
     },
     correctContent() {
-        return expect(gonebusy.BookingsController.getBookings(requestIndexParams)).to.eventually
-            .have.property('bookings').and.have.lengthOf(1);
+        return expect(
+            BookingsController.getBookings(configuration.authorization, indexParams.page, indexParams.per_page)
+        ).to.eventually.have.property('bookings').and.have.lengthOf(1);
     }
 };
 
 const createParams = { service_id: 0, date: 'string', time: 'string', resource_id: 0, duration: 0, user_id: 0 };
-const requestCreateParams = _.chain(configuration).pick('authorization').assign({ createBookingBody: createParams })
-    .value();
 
 const createBooking = {
     nockRequest() {
@@ -45,23 +43,22 @@ const createBooking = {
     },
     promiseResolved() {
         return expect(
-            gonebusy.BookingsController.createBooking(requestCreateParams)
-                    .then(() => {})
-                    .catch(() => {})
+            BookingsController.createBooking(configuration.authorization, createParams)
         ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.BookingsController.createBooking(requestCreateParams)).to.eventually
-            .be.an.instanceof(CreateBookingResponse);
+        return expect(
+            BookingsController.createBooking(configuration.authorization, createParams)
+        ).to.eventually.be.an.instanceof(CreateBookingResponse);
     },
     correctContent() {
-        return expect(gonebusy.BookingsController.createBooking(requestCreateParams)).to.eventually
-            .have.property('booking').and.be.a('object').and.have.property('id');
+        return expect(
+            BookingsController.createBooking(configuration.authorization, createParams)
+        ).to.eventually.have.property('booking').and.be.a('object').and.have.property('id');
     }
 };
 
-const bookingId = 0;
-const requestInstanceParams = _.chain(configuration).pick('authorization').assign({ id: bookingId }).value();
+const bookingId = 123;
 
 const cancelBookingById = {
     nockRequest() {
@@ -70,15 +67,19 @@ const cancelBookingById = {
             .replyWithFile(200, `${bookingsFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.BookingsController.cancelBookingById(requestInstanceParams)).to.eventually.be.resolved;
+        return expect(
+            BookingsController.cancelBookingById(configuration.authorization, bookingId)
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.BookingsController.cancelBookingById(requestInstanceParams)).to.eventually
-            .be.an.instanceof(CancelBookingByIdResponse);
+        return expect(
+            BookingsController.cancelBookingById(configuration.authorization, bookingId)
+        ).to.eventually.be.an.instanceof(CancelBookingByIdResponse);
     },
     correctContent() {
-        return expect(gonebusy.BookingsController.cancelBookingById(requestInstanceParams)).to.eventually
-            .have.property('booking').and.be.a('object').and.have.property('id').and.equal(bookingId);
+        return expect(
+            BookingsController.cancelBookingById(configuration.authorization, bookingId)
+        ).to.eventually.have.property('booking').and.be.a('object').and.have.property('id').and.equal(bookingId);
     }
 };
 
@@ -89,15 +90,19 @@ const updateBookingById = {
             .replyWithFile(200, `${bookingsFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.BookingsController.updateBookingById(requestInstanceParams)).to.eventually.be.resolved;
+        return expect(
+            BookingsController.updateBookingById(configuration.authorization, bookingId, createParams)
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.BookingsController.updateBookingById(requestInstanceParams)).to.eventually
-            .be.an.instanceof(UpdateBookingByIdResponse);
+        return expect(
+            BookingsController.updateBookingById(configuration.authorization, bookingId, createParams)
+        ).to.eventually.be.an.instanceof(UpdateBookingByIdResponse);
     },
     correctContent() {
-        return expect(gonebusy.BookingsController.updateBookingById(requestInstanceParams)).to.eventually
-            .have.property('booking').and.be.a('object').and.have.property('id').and.equal(bookingId);
+        return expect(
+            BookingsController.updateBookingById(configuration.authorization, bookingId, createParams)
+        ).to.eventually.have.property('booking').and.be.a('object').and.have.property('id').and.equal(bookingId);
     }
 };
 
@@ -108,15 +113,19 @@ const getBookingById = {
             .replyWithFile(200, `${bookingsFixturesPath}/show.json`);
     },
     promiseResolved() {
-        return expect(gonebusy.BookingsController.getBookingById(requestInstanceParams)).to.eventually.be.resolved;
+        return expect(
+            BookingsController.getBookingById(configuration.authorization, bookingId)
+        ).to.eventually.be.resolved;
     },
     correctInstance() {
-        return expect(gonebusy.BookingsController.getBookingById(requestInstanceParams)).to.eventually
-            .be.an.instanceof(GetBookingByIdResponse);
+        return expect(
+            BookingsController.getBookingById(configuration.authorization, bookingId)
+        ).to.eventually.be.an.instanceof(GetBookingByIdResponse);
     },
     correctContent() {
-        return expect(gonebusy.BookingsController.getBookingById(requestInstanceParams)).to.eventually
-            .have.property('booking').and.be.a('object').and.have.property('id').and.equal(bookingId);
+        return expect(
+            BookingsController.getBookingById(configuration.authorization, bookingId)
+        ).to.eventually.have.property('booking').and.be.a('object').and.have.property('id').and.equal(bookingId);
     }
 };
 
