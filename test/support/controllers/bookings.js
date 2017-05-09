@@ -59,26 +59,45 @@ const createBooking = {
 };
 
 const bookingId = 123;
-
+const cancelParams = { cancel_recurring: false, date: '2017-05-05', end_date: '2017-05-05' };
 const cancelBookingById = {
     nockRequest() {
         nock(configuration.getBaseUri())
             .delete(`/bookings/${bookingId}`)
+            .query(cancelParams)
             .replyWithFile(200, `${bookingsFixturesPath}/show.json`);
     },
     promiseResolved() {
         return expect(
-            BookingsController.cancelBookingById(configuration.authorization, bookingId)
+            BookingsController.cancelBookingById(
+                configuration.authorization, 
+                bookingId,
+                cancelParams.cancel_recurring,
+                cancelParams.date,
+                cancelParams.end_date
+            )
         ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(
-            BookingsController.cancelBookingById(configuration.authorization, bookingId)
+            BookingsController.cancelBookingById(
+                configuration.authorization, 
+                bookingId,
+                cancelParams.cancel_recurring,
+                cancelParams.date,
+                cancelParams.end_date
+            )
         ).to.eventually.be.an.instanceof(CancelBookingByIdResponse);
     },
     correctContent() {
         return expect(
-            BookingsController.cancelBookingById(configuration.authorization, bookingId)
+            BookingsController.cancelBookingById(
+                configuration.authorization, 
+                bookingId,
+                cancelParams.cancel_recurring,
+                cancelParams.date,
+                cancelParams.end_date
+            )
         ).to.eventually.have.property('booking').and.be.a('object').and.have.property('id').and.equal(bookingId);
     }
 };

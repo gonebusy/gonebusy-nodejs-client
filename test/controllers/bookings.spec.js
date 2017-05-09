@@ -9,9 +9,9 @@ describe('Controller Bookings', () => {
 
             beforeEach('nock requests', spec.nockRequest);
 
-            it('resolve promise', spec.promiseResolved);
-            it('resolve correct response', spec.correctInstance);
-            it('resolve correct content', spec.correctContent);
+            it('resolves promise', spec.promiseResolved);
+            it('resolves correct response', spec.correctInstance);
+            it('resolves correct content', spec.correctContent);
         });
     });
 });
