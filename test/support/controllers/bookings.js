@@ -33,7 +33,20 @@ const getBookings = {
     }
 };
 
-const createParams = { service_id: 0, date: 'string', time: 'string', resource_id: 0, duration: 0, user_id: 0 };
+const createParams = {
+    service_id: 0,
+    date: 'string',
+    time: 'string',
+    resource_id: 0,
+    duration: 0,
+    user_id: 0,
+    end_date: '2017-05-09',
+    recurs_by: 'once',
+    frequency: 'single',
+    days: 'string',
+    occurrence: '4th_to_last',
+    date_recurs_by: 'day_in_month'
+};
 
 const createBooking = {
     nockRequest() {
@@ -60,6 +73,7 @@ const createBooking = {
 
 const bookingId = 123;
 const cancelParams = { cancel_recurring: false, date: '2017-05-05', end_date: '2017-05-05' };
+
 const cancelBookingById = {
     nockRequest() {
         nock(configuration.getBaseUri())
@@ -70,7 +84,7 @@ const cancelBookingById = {
     promiseResolved() {
         return expect(
             BookingsController.cancelBookingById(
-                configuration.authorization, 
+                configuration.authorization,
                 bookingId,
                 cancelParams.cancel_recurring,
                 cancelParams.date,
@@ -81,7 +95,7 @@ const cancelBookingById = {
     correctInstance() {
         return expect(
             BookingsController.cancelBookingById(
-                configuration.authorization, 
+                configuration.authorization,
                 bookingId,
                 cancelParams.cancel_recurring,
                 cancelParams.date,
@@ -92,7 +106,7 @@ const cancelBookingById = {
     correctContent() {
         return expect(
             BookingsController.cancelBookingById(
-                configuration.authorization, 
+                configuration.authorization,
                 bookingId,
                 cancelParams.cancel_recurring,
                 cancelParams.date,
@@ -102,6 +116,8 @@ const cancelBookingById = {
     }
 };
 
+
+const updateParams = _.omit(createParams, ['resource_id', 'service_id']);
 const updateBookingById = {
     nockRequest() {
         nock(configuration.getBaseUri())
@@ -110,17 +126,17 @@ const updateBookingById = {
     },
     promiseResolved() {
         return expect(
-            BookingsController.updateBookingById(configuration.authorization, bookingId, createParams)
+            BookingsController.updateBookingById(configuration.authorization, bookingId, updateParams)
         ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(
-            BookingsController.updateBookingById(configuration.authorization, bookingId, createParams)
+            BookingsController.updateBookingById(configuration.authorization, bookingId, updateParams)
         ).to.eventually.be.an.instanceof(UpdateBookingByIdResponse);
     },
     correctContent() {
         return expect(
-            BookingsController.updateBookingById(configuration.authorization, bookingId, createParams)
+            BookingsController.updateBookingById(configuration.authorization, bookingId, updateParams)
         ).to.eventually.have.property('booking').and.be.a('object').and.have.property('id').and.equal(bookingId);
     }
 };
