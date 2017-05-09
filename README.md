@@ -31,10 +31,10 @@ Then try the following:
     var gonebusy = require('gonebusy-nodejs-client');
     ```
 
-1. Configure the BASEURI for Sandbox testing
+1. Configure the environment for Sandbox testing
 
     ```js
-    gonebusy.configuration.BASEURI = 'https://sandbox.gonebusy.com/api/v1';
+    gonebusy.Configuration.currentEnvironment = 'sandbox'
     ```
     
 1. Configure your API Key:
@@ -43,24 +43,12 @@ Then try the following:
     var authorization = 'Token ac98ed08b5b0a9e7c43a233aeba841ce'; // Default Sandbox token
     ```
 
-1. Require Bluebird:
-
-    ```js
-    var Promise = require('bluebird').Promise;
-    ```
-    
-1. Promisify all ServicesController methods:
-
-    ```js
-    var services = Promise.promisifyAll(gonebusy.ServicesController);
-    ```
-
 1. Get a list of Services for the current user:
 
     ```js
-    services.getServicesAsync({authorization}).then((result)=>{
+    gonebusy.ServicesController.getServices({authorization}).then((result)=>{
         console.log(result);
-    }).error((e)=>{
+    }).catch((e)=>{
         console.log(e);
     })
     ```
@@ -127,12 +115,12 @@ The following is an example of how to use the CreateServiceBody helper object wh
 3. Let's send off the request to create our new Service:
 
     ```js
-    services.createServiceAsync({
+    gonebusy.ServicesController.createService({
         authorization: 'Token ac98ed08b5b0a9e7c43a233aeba841ce',
         createServiceBody: new_service
     }).then((result)=>{
         console.log(result);
-    }).error((e)=>{
+    }).catch((e)=>{
         console.log(e);
     })
     ```
@@ -162,12 +150,12 @@ Just as with Request Body helpers, there are Response helper objects correspondi
 When using Promises, the success result will be a Response instance as follows:
 
 ```js
-services.createServiceAsync({
+gonebusy.ServicesController.createService({
     authorization: 'Token ac98ed08b5b0a9e7c43a233aeba841ce',
     createServiceBody: new_service
 }).then((resp)=>{
     console.log(resp.getService());
-}).error((e)=>{
+}).catch((e)=>{
     console.log(e);
 })
 ```

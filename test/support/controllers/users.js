@@ -1,31 +1,34 @@
-const GetUsersResponse = require(rootPath + '/lib/Models/GetUsersResponse');
-const CreateUserResponse = require(rootPath + '/lib/Models/CreateUserResponse');
-const GetUserByIdResponse = require(rootPath + '/lib/Models/GetUserByIdResponse');
-const UpdateUserByIdResponse = require(rootPath + '/lib/Models/UpdateUserByIdResponse');
+const UsersController = require('../../../lib/Controllers/UsersController');
+const GetUsersResponse = require('../../../lib/Models/GetUsersResponse');
+const CreateUserResponse = require('../../../lib/Models/CreateUserResponse');
+const GetUserByIdResponse = require('../../../lib/Models/GetUserByIdResponse');
+const UpdateUserByIdResponse = require('../../../lib/Models/UpdateUserByIdResponse');
 
-const UsersController = Promise.promisifyAll(gonebusy.UsersController);
-const usersFixturesPath = fixturesPath + '/users';
+const usersFixturesPath = `${fixturesPath}/users`;
 
 const indexParams = { page: 1, per_page: 10 };
-const requestIndexParams = _.chain(configuration).pick('authorization').assign(indexParams).value();
 
 const getUsers = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
+    nockRequest() {
+        nock(configuration.getBaseUri())
             .get('/users')
             .query(indexParams)
-            .replyWithFile(200, usersFixturesPath + '/index.json');
+            .replyWithFile(200, `${usersFixturesPath}/index.json`);
     },
-    promiseResolved: function () {
-        return expect(UsersController.getUsersAsync(requestIndexParams)).to.eventually.be.resolved;
+    promiseResolved() {
+        return expect(
+            UsersController.getUsers(configuration.authorization, indexParams.page, indexParams.per_page)
+        ).to.eventually.be.resolved;
     },
-    correctInstance: function () {
-        return expect(UsersController.getUsersAsync(requestIndexParams)).to.eventually
-            .be.an.instanceof(GetUsersResponse);
+    correctInstance() {
+        return expect(
+            UsersController.getUsers(configuration.authorization, indexParams.page, indexParams.per_page)
+        ).to.eventually.be.an.instanceof(GetUsersResponse);
     },
-    correctContent: function () {
-        return expect(UsersController.getUsersAsync(requestIndexParams)).to.eventually
-            .have.property('users').and.have.lengthOf(1);
+    correctContent() {
+        return expect(
+            UsersController.getUsers(configuration.authorization, indexParams.page, indexParams.per_page)
+        ).to.eventually.have.property('users').and.have.lengthOf(1);
     }
 };
 
@@ -38,75 +41,83 @@ const createParams = {
     permalink: 'string',
     timezone: 'string'
 };
-const requestCreateParams = _.chain(configuration).pick('authorization').assign({ createUserBody: createParams })
-    .value();
 
 const createUser = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
+    nockRequest() {
+        nock(configuration.getBaseUri())
             .post('/users/new', createParams)
-            .replyWithFile(201, usersFixturesPath + '/show.json');
+            .replyWithFile(201, `${usersFixturesPath}/show.json`);
     },
-    promiseResolved: function () {
-        return expect(UsersController.createUserAsync(requestCreateParams)).to.eventually.be.resolved;
+    promiseResolved() {
+        return expect(
+            UsersController.createUser(configuration.authorization, createParams)
+        ).to.eventually.be.resolved;
     },
-    correctInstance: function () {
-        return expect(UsersController.createUserAsync(requestCreateParams)).to.eventually
-            .be.an.instanceof(CreateUserResponse);
+    correctInstance() {
+        return expect(
+            UsersController.createUser(configuration.authorization, createParams)
+        ).to.eventually.be.an.instanceof(CreateUserResponse);
     },
-    correctContent: function () {
-        return expect(UsersController.createUserAsync(requestCreateParams)).to.eventually
-            .have.property('user').and.be.a('object').and.have.property('id');
+    correctContent() {
+        return expect(
+            UsersController.createUser(configuration.authorization, createParams)
+        ).to.eventually.have.property('user').and.be.a('object').and.have.property('id');
     }
 };
 
-const userId = 0;
-const requestInstanceParams = _.chain(configuration).pick('authorization').assign({ id: userId }).value();
+const userId = 123;
 
 const getUserById = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
-            .get('/users/' + userId)
-            .replyWithFile(200, usersFixturesPath + '/show.json');
+    nockRequest() {
+        nock(configuration.getBaseUri())
+            .get(`/users/${userId}`)
+            .replyWithFile(200, `${usersFixturesPath}/show.json`);
     },
-    promiseResolved: function () {
-        return expect(UsersController.getUserByIdAsync(requestInstanceParams)).to.eventually.be.resolved;
+    promiseResolved() {
+        return expect(
+            UsersController.getUserById(configuration.authorization, userId)
+        ).to.eventually.be.resolved;
     },
-    correctInstance: function () {
-        return expect(UsersController.getUserByIdAsync(requestInstanceParams)).to.eventually
-            .be.an.instanceof(GetUserByIdResponse);
+    correctInstance() {
+        return expect(
+            UsersController.getUserById(configuration.authorization, userId)
+        ).to.eventually.be.an.instanceof(GetUserByIdResponse);
     },
-    correctContent: function () {
-        return expect(UsersController.getUserByIdAsync(requestInstanceParams)).to.eventually
-            .have.property('user').and.be.a('object').and.have.property('id').and.equal(userId);
+    correctContent() {
+        return expect(
+            UsersController.getUserById(configuration.authorization, userId)
+        ).to.eventually.have.property('user').and.be.a('object').and.have.property('id').and.equal(userId);
     }
 };
 
 const updateParams = createParams;
-const requestUpdateParams = _.assign({ updateUserByIdBody: updateParams }, requestInstanceParams);
 
 const updateUserById = {
-    nockRequest: function () {
-        nock(configuration.BASEURI)
-            .put('/users/' + userId, updateParams)
-            .replyWithFile(200, usersFixturesPath + '/show.json');
+    nockRequest() {
+        nock(configuration.getBaseUri())
+            .put(`/users/${userId}`, updateParams)
+            .replyWithFile(200, `${usersFixturesPath}/show.json`);
     },
-    promiseResolved: function () {
-        return expect(UsersController.updateUserByIdAsync(requestUpdateParams)).to.eventually.be.resolved;
+    promiseResolved() {
+        return expect(
+            UsersController.updateUserById(configuration.authorization, userId, updateParams)
+        ).to.eventually.be.resolved;
     },
-    correctInstance: function () {
-        return expect(UsersController.updateUserByIdAsync(requestUpdateParams)).to.eventually
-            .be.an.instanceof(UpdateUserByIdResponse);
+    correctInstance() {
+        return expect(
+            UsersController.updateUserById(configuration.authorization, userId, updateParams)
+        ).to.eventually.be.an.instanceof(UpdateUserByIdResponse);
     },
-    correctContent: function () {
-        return expect(UsersController.updateUserByIdAsync(requestUpdateParams)).to.eventually
-            .have.property('user').and.be.a('object').and.have.property('id').and.equal(userId);
+    correctContent() {
+        return expect(
+            UsersController.updateUserById(configuration.authorization, userId, updateParams)
+        ).to.eventually.have.property('user').and.be.a('object').and.have.property('id').and.equal(userId);
     }
 };
 
 module.exports = {
-    getUsers: getUsers,
-    createUser: createUser,
-    updateUserById: updateUserById,
-    getUserById: getUserById
+    getUsers,
+    createUser,
+    updateUserById,
+    getUserById
 };

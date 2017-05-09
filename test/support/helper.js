@@ -14,9 +14,8 @@ global.configuration = configuration;
 global._ = _;
 
 global.gonebusy = require('../../lib/index');
-global.Promise = require('bluebird').Promise;
 
 global.testPath = __dirname.slice(0, -8);
 global.rootPath = testPath.slice(0, -5);
 
-global.fixturesPath = testPath + '/fixtures';
+global.fixturesPath = `${testPath}/fixtures`;

@@ -1,11 +1,11 @@
-const specs = require(testPath + '/support/controllers/resources');
+const specs = require('../support/controllers/resources');
 
-describe('Controller Resources', function () {
+describe('Controller Resources', () => {
     const names = ['getResources', 'getResourceThings', 'createResource', 'deleteResourceById', 'updateResourceById',
         'getResourceById'];
 
-    _.each(names, function (name) {
-        describe('#' + name, function () {
+    _.each(names, (name) => {
+        describe(`#${name}`, () => {
             const spec = specs[name];
 
             beforeEach('nock requests', spec.nockRequest);
