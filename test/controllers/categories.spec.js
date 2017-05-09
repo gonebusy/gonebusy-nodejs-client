@@ -1,10 +1,10 @@
-const specs = require(testPath + '/support/controllers/categories');
+const specs = require('../support/controllers/categories');
 
-describe('Controller Categories', function () {
+describe('Controller Categories', () => {
     const names = ['getCategories', 'createCategory', 'getCategoryById'];
 
-    _.each(names, function (name) {
-        describe('#' + name, function () {
+    _.each(names, (name) => {
+        describe(`#${name}`, () => {
             const spec = specs[name];
 
             beforeEach('nock requests', spec.nockRequest);
