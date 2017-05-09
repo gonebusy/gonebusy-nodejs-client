@@ -1,6 +1,19 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.1.0] - 2017-05-08 ##
+### NOTE - This version introduces breaking changes and additions listed below.
+
+### Changed
+- [#26](https://github.com/gonebusy/gonebusy-nodejs-client/pull/26) - All SDK methods now return Promises.  No need for a proxy async wrapper library such as Bluebird. - [@alexagranov](https://github.com/alexagranov)
+- [#26](https://github.com/gonebusy/gonebusy-nodejs-client/pull/26) - CreateBookingBody `:date` attribute is now a DateTime rather than a String. - [@alexagranov](https://github.com/alexagranov)
+- [#26](https://github.com/gonebusy/gonebusy-nodejs-client/pull/26) - TimeWindow attribute `:negation` has been renamed to `:unavailable`. - [@alexagranov](https://github.com/alexagranov)
+
+### Added
+- [#26](https://github.com/gonebusy/gonebusy-nodejs-client/pull/26) - POST /bookings/new now takes parameters supporting the creation of a recurring Booking. - [@alexagranov](https://github.com/alexagranov)
+- [#26](https://github.com/gonebusy/gonebusy-nodejs-client/pull/26) - PUT /bookings/:id now takes parameters supporting the modification of a recurring Booking or instance of such. - [@alexagranov](https://github.com/alexagranov)
+- [#26](https://github.com/gonebusy/gonebusy-nodejs-client/pull/26) - DELETE /bookings/:id now takes parameters supporting the cancellation of a recurring Booking or instance of such. - [@alexagranov](https://github.com/alexagranov)
+
 ## [0.0.9] - 2017-03-21 ##
 ### Added
 - [#24](https://github.com/gonebusy/gonebusy-nodejs-client/pull/24) - Add schedules array to ServiceResponse - [@alexagranov](https://github.com/alexagranov)
