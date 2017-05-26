@@ -8,7 +8,7 @@ const GetServiceAvailableSlotsByIdResponse = require('../../../lib/Models/GetSer
 
 const servicesFixturesPath = `${fixturesPath}/services`;
 
-const indexParams = { page: 1, per_page: 10 };
+const indexParams = { user_id: 0, page: 1, per_page: 10 };
 
 const getServices = {
     nockRequest() {
@@ -19,17 +19,32 @@ const getServices = {
     },
     promiseResolved() {
         return expect(
-            ServicesController.getServices(configuration.authorization, indexParams.page, indexParams.per_page)
+            ServicesController.getServices(
+                configuration.authorization,
+                indexParams.user_id,
+                indexParams.page,
+                indexParams.per_page
+            )
         ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(
-            ServicesController.getServices(configuration.authorization, indexParams.page, indexParams.per_page)
+            ServicesController.getServices(
+                configuration.authorization,
+                indexParams.user_id,
+                indexParams.page,
+                indexParams.per_page
+            )
         ).to.eventually.be.an.instanceof(GetServicesResponse);
     },
     correctContent() {
         return expect(
-            ServicesController.getServices(configuration.authorization, indexParams.page, indexParams.per_page)
+            ServicesController.getServices(
+                configuration.authorization,
+                indexParams.user_id,
+                indexParams.page,
+                indexParams.per_page
+            )
         ).to.eventually.have.property('services').and.have.lengthOf(1);
     }
 };

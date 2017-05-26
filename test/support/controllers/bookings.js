@@ -7,7 +7,13 @@ const GetBookingByIdResponse = require('../../../lib/Models/GetBookingByIdRespon
 
 const bookingsFixturesPath = `${fixturesPath}/bookings`;
 
-const indexParams = { page: 1, per_page: 10 };
+const indexParams = {
+    user_id: 0,
+    states: 'string',
+    booker_id: 0,
+    page: 1,
+    per_page: 10
+};
 
 const getBookings = {
     nockRequest() {
@@ -18,17 +24,38 @@ const getBookings = {
     },
     promiseResolved() {
         return expect(
-            BookingsController.getBookings(configuration.authorization, indexParams.page, indexParams.per_page)
+            BookingsController.getBookings(
+                configuration.authorization,
+                indexParams.user_id,
+                indexParams.states,
+                indexParams.booker_id,
+                indexParams.page,
+                indexParams.per_page
+            )
         ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(
-            BookingsController.getBookings(configuration.authorization, indexParams.page, indexParams.per_page)
+            BookingsController.getBookings(
+                configuration.authorization,
+                indexParams.user_id,
+                indexParams.states,
+                indexParams.booker_id,
+                indexParams.page,
+                indexParams.per_page
+            )
         ).to.eventually.be.an.instanceof(GetBookingsResponse);
     },
     correctContent() {
         return expect(
-            BookingsController.getBookings(configuration.authorization, indexParams.page, indexParams.per_page)
+            BookingsController.getBookings(
+                configuration.authorization,
+                indexParams.user_id,
+                indexParams.states,
+                indexParams.booker_id,
+                indexParams.page,
+                indexParams.per_page
+            )
         ).to.eventually.have.property('bookings').and.have.lengthOf(1);
     }
 };
@@ -86,9 +113,9 @@ const cancelBookingById = {
             BookingsController.cancelBookingById(
                 configuration.authorization,
                 bookingId,
-                cancelParams.cancel_recurring,
                 cancelParams.date,
-                cancelParams.end_date
+                cancelParams.end_date,
+                cancelParams.cancel_recurring
             )
         ).to.eventually.be.resolved;
     },
@@ -97,9 +124,9 @@ const cancelBookingById = {
             BookingsController.cancelBookingById(
                 configuration.authorization,
                 bookingId,
-                cancelParams.cancel_recurring,
                 cancelParams.date,
-                cancelParams.end_date
+                cancelParams.end_date,
+                cancelParams.cancel_recurring
             )
         ).to.eventually.be.an.instanceof(CancelBookingByIdResponse);
     },
@@ -108,9 +135,9 @@ const cancelBookingById = {
             BookingsController.cancelBookingById(
                 configuration.authorization,
                 bookingId,
-                cancelParams.cancel_recurring,
                 cancelParams.date,
-                cancelParams.end_date
+                cancelParams.end_date,
+                cancelParams.cancel_recurring
             )
         ).to.eventually.have.property('booking').and.be.a('object').and.have.property('id').and.equal(bookingId);
     }

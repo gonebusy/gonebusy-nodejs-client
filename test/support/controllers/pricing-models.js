@@ -6,7 +6,7 @@ const UpdatePricingModelByIdResponse = require('../../../lib/Models/UpdatePricin
 
 const pricingFixturesPath = `${fixturesPath}/pricing_models`;
 
-const indexParams = { page: 1, per_page: 10 };
+const indexParams = { user_id: 0, page: 1, per_page: 10 };
 
 const getPricingModels = {
     nockRequest() {
@@ -18,19 +18,31 @@ const getPricingModels = {
     promiseResolved() {
         return expect(
             PricingModelsController.getPricingModels(
-                configuration.authorization, indexParams.page, indexParams.per_page)
+                configuration.authorization,
+                indexParams.user_id,
+                indexParams.page,
+                indexParams.per_page
+            )
         ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(
             PricingModelsController.getPricingModels(
-                configuration.authorization, indexParams.page, indexParams.per_page)
+                configuration.authorization,
+                indexParams.user_id,
+                indexParams.page,
+                indexParams.per_page
+            )
         ).to.eventually.be.an.instanceof(GetPricingModelsResponse);
     },
     correctContent() {
         return expect(
             PricingModelsController.getPricingModels(
-                configuration.authorization, indexParams.page, indexParams.per_page)
+                configuration.authorization,
+                indexParams.user_id,
+                indexParams.page,
+                indexParams.per_page
+            )
         ).to.eventually.have.property('pricingModels').and.have.lengthOf(1);
     }
 };
