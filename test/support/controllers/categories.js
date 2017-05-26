@@ -5,7 +5,7 @@ const GetCategoryByIdResponse = require('../../../lib/Models/GetCategoryByIdResp
 
 const categoriesFixturesPath = `${fixturesPath}/categories`;
 
-const indexParams = { page: 1, per_page: 10 };
+const indexParams = { user_id: 0, page: 1, per_page: 10 };
 
 const getCategories = {
     nockRequest() {
@@ -16,17 +16,32 @@ const getCategories = {
     },
     promiseResolved() {
         return expect(
-            CategoriesController.getCategories(configuration.authorization, indexParams.page, indexParams.per_page)
+            CategoriesController.getCategories(
+                configuration.authorization,
+                indexParams.user_id,
+                indexParams.page,
+                indexParams.per_page
+            )
         ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(
-            CategoriesController.getCategories(configuration.authorization, indexParams.page, indexParams.per_page)
+            CategoriesController.getCategories(
+                configuration.authorization,
+                indexParams.user_id,
+                indexParams.page,
+                indexParams.per_page
+            )
         ).to.eventually.be.an.instanceof(GetCategoriesResponse);
     },
     correctContent() {
         return expect(
-            CategoriesController.getCategories(configuration.authorization, indexParams.page, indexParams.per_page)
+            CategoriesController.getCategories(
+                configuration.authorization,
+                indexParams.user_id,
+                indexParams.page,
+                indexParams.per_page
+            )
         ).to.eventually.have.property('categories').and.have.lengthOf(1);
     }
 };

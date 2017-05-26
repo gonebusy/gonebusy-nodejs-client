@@ -8,7 +8,7 @@ const UpdateResourceByIdResponse = require('../../../lib/Models/UpdateResourceBy
 
 const resourcesFixturesPath = `${fixturesPath}/resources`;
 
-const indexParams = { page: 1, per_page: 10 };
+const indexParams = { user_id: 0, page: 1, per_page: 10 };
 
 const getResources = {
     nockRequest() {
@@ -19,41 +19,58 @@ const getResources = {
     },
     promiseResolved() {
         return expect(
-            ResourcesController.getResources(configuration.authorization, indexParams.page, indexParams.per_page)
+            ResourcesController.getResources(
+                configuration.authorization,
+                indexParams.user_id,
+                indexParams.page,
+                indexParams.per_page
+            )
         ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(
-            ResourcesController.getResources(configuration.authorization, indexParams.page, indexParams.per_page)
+            ResourcesController.getResources(
+                configuration.authorization,
+                indexParams.user_id,
+                indexParams.page,
+                indexParams.per_page
+            )
         ).to.eventually.be.an.instanceof(GetResourcesResponse);
     },
     correctContent() {
         return expect(
-            ResourcesController.getResources(configuration.authorization, indexParams.page, indexParams.per_page)
+            ResourcesController.getResources(
+                configuration.authorization,
+                indexParams.user_id,
+                indexParams.page,
+                indexParams.per_page
+            )
         ).to.eventually.have.property('resources').and.have.lengthOf(1);
     }
 };
+
+const thingParams = { page: 1, per_page: 10 };
 
 const getResourceThings = {
     nockRequest() {
         nock(configuration.getBaseUri())
             .get('/resources/things')
-            .query(indexParams)
+            .query(thingParams)
             .replyWithFile(200, `${resourcesFixturesPath}/things/index.json`);
     },
     promiseResolved() {
         return expect(
-            ResourcesController.getResourceThings(configuration.authorization, indexParams.page, indexParams.per_page)
+            ResourcesController.getResourceThings(configuration.authorization, thingParams.page, thingParams.per_page)
         ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(
-            ResourcesController.getResourceThings(configuration.authorization, indexParams.page, indexParams.per_page)
+            ResourcesController.getResourceThings(configuration.authorization, thingParams.page, thingParams.per_page)
         ).to.eventually.be.an.instanceof(GetResourceThingsResponse);
     },
     correctContent() {
         return expect(
-            ResourcesController.getResourceThings(configuration.authorization, indexParams.page, indexParams.per_page)
+            ResourcesController.getResourceThings(configuration.authorization, thingParams.page, thingParams.per_page)
         ).to.eventually.have.property('things').and.have.lengthOf(1);
     }
 };
