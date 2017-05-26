@@ -9,7 +9,13 @@ const UpdateScheduleTimeWindowByIdResponse = require('../../../lib/Models/Update
 
 const schedulesFixturesPath = `${fixturesPath}/schedules`;
 
-const indexParams = { page: 1, per_page: 10 };
+const indexParams = {
+    user_id: 0,
+    resource_id: 0,
+    service_id: 0,
+    page: 1,
+    per_page: 10
+};
 
 const getSchedules = {
     nockRequest() {
@@ -20,17 +26,38 @@ const getSchedules = {
     },
     promiseResolved() {
         return expect(
-            SchedulesController.getSchedules(configuration.authorization, indexParams.page, indexParams.per_page)
+            SchedulesController.getSchedules(
+                configuration.authorization,
+                indexParams.user_id,
+                indexParams.resource_id,
+                indexParams.service_id,
+                indexParams.page,
+                indexParams.per_page
+            )
         ).to.eventually.be.resolved;
     },
     correctInstance() {
         return expect(
-            SchedulesController.getSchedules(configuration.authorization, indexParams.page, indexParams.per_page)
+            SchedulesController.getSchedules(
+                configuration.authorization,
+                indexParams.user_id,
+                indexParams.resource_id,
+                indexParams.service_id,
+                indexParams.page,
+                indexParams.per_page
+            )
         ).to.eventually.be.an.instanceof(GetSchedulesResponse);
     },
     correctContent() {
         return expect(
-            SchedulesController.getSchedules(configuration.authorization, indexParams.page, indexParams.per_page)
+            SchedulesController.getSchedules(
+                configuration.authorization,
+                indexParams.user_id,
+                indexParams.resource_id,
+                indexParams.service_id,
+                indexParams.page,
+                indexParams.per_page
+            )
         ).to.eventually.have.property('schedules').and.have.lengthOf(1);
     }
 };
