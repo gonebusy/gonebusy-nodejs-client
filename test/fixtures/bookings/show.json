@@ -19,6 +19,8 @@
         "string"
       ],
       "unavailable": true
-    }
+    },
+    "resource_id": 0,
+    "service_id": 0
   }
 }
