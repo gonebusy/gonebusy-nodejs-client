@@ -72,7 +72,9 @@ const createParams = {
     frequency: 'single',
     days: 'string',
     occurrence: '4th_to_last',
-    date_recurs_by: 'day_in_month'
+    date_recurs_by: 'day_in_month',
+    name: 'my booking',
+    description: 'my description'
 };
 
 const createBooking = {
