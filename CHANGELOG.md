@@ -1,6 +1,14 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.1.3] - 2017-06-18 ##
+### Added
+- [#30](https://github.com/gonebusy/gonebusy-nodejs-client/pull/30) - Booking creation/update now accept optional :name and :description
+- [#30](https://github.com/gonebusy/gonebusy-nodejs-client/pull/30) - Booking item response now contains :name, :description, :external_link, :collaborative_link
+
+### Changed
+- [#30](https://github.com/gonebusy/gonebusy-nodejs-client/pull/30) - Booking :user_message has been replaced by separate :name and :description
+
 ## [0.1.2] - 2017-06-14 ##
 ### Added
 - [#28](https://github.com/gonebusy/gonebusy-nodejs-client/pull/28) - Booking item response now includes :resource_id and :service_id corresponding to Resource providing the Booking and the Service being performed.
