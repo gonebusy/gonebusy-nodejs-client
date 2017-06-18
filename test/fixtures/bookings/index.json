@@ -4,7 +4,7 @@
       "id": 123,
       "owner_id": 0,
       "workflow_state": "string",
-      "user_message": "string",
+      "name": "string",
       "time_window": {
         "id": 456,
         "start_date": "2016-12-19",
@@ -20,7 +20,12 @@
           "string"
         ],
         "unavailable": true
-      }
+      },
+      "resource_id": 0,
+      "service_id": 0,
+      "description": "string",
+      "external_link": "string",
+      "collaborative_link": "string"
     }
   ]
 }
