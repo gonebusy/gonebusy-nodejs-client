@@ -36,7 +36,7 @@ Then try the following:
     ```js
     gonebusy.Configuration.currentEnvironment = 'sandbox'
     ```
-    
+
 1. Configure your API Key:
 
     ```js
@@ -46,31 +46,35 @@ Then try the following:
 1. Get a list of Services for the current user:
 
     ```js
-    gonebusy.ServicesController.getServices({authorization}).then((result)=>{
+    gonebusy.ServicesController.getServices(authorization).then((result)=>{
         console.log(result);
     }).catch((e)=>{
         console.log(e);
     })
     ```
-    
+
     Output of `console.log()`:
     ```
-    BaseModel {
-    services: 
-     [ BaseModel {
-         categories: [],
-         description: 'A Service for Samples',
-         duration: 30,
-         maxDuration: 30,
-         id: 197264885,
+    GetServicesResponse {
+    services:
+     [ EntitiesServiceResponse {
+         id: '3f58d6bb-59ba-4e7f-aeaa-2544c384d9d7',
+         ownerId: '281ce067-50dc-4746-ac78-ded592655699',
+         name: 'name',
+         shortName: 'short_name',
+         duration: 15,
+         maxDuration: 15,
+         description: A Service for Samples,
+         priceModelId: '5d9cea4f-9e6a-46bd-9c7f-6195a88753eb',
          isActive: true,
-         name: 'Sample Service',
-         ownerId: 8552697701,
-         priceModelId: 2,
-         resources: [Object],
-         shortName: null } ] }
+         categories: [],
+         resources: [],
+         schedules: [] },
+     ...
+     ]
+   }
    ```
-   
+
 ## Using Request Body Helpers
 
 For any controller operations that expect a request body, or a set of params, there exist CreateXXXBody/UpdateXXXByIdBody/etc. helper objects corresponding to the operation.  The helper objects allow your request code to be constructed with params that conform to the GoneBusy API while still supporting Node/ES6-style property access.
@@ -80,7 +84,7 @@ The following is an example of how to use the CreateServiceBody helper object wh
 1. Create an instance of CreateServiceBody to wrap your desired attributes into an object:
 
     ```js
-    var new_service = new CreateServiceBody({
+    var new_service = new gonebusy.CreateServiceBody({
       name: 'My Sample Service',
       duration: 30,
       max_duration: 30,
@@ -88,92 +92,62 @@ The following is an example of how to use the CreateServiceBody helper object wh
       short_name: 'MyService'
     });
     ```
-    
+
 2. Note that the property passed to the constructor uses snake_case but the underlying `BaseModel` object allows access via ES6 camelCase or even a traditional getter:
 
     ```js
     new_service.shortName;
     new_service.getShortName();
     ```
-    
+
     Both output:
     ```js
     'MyService'
     ```
-    
+
     Setters work as well:
     ```js
     new_service.setShortName('My Sample x2');
     new_service.getShortName();
     ```
-    
+
     Outputs:
     ```js
     'My Sample x2'
     ```
-    
+
 3. Let's send off the request to create our new Service:
 
     ```js
-    gonebusy.ServicesController.createService({
-        authorization: 'Token ac98ed08b5b0a9e7c43a233aeba841ce',
-        createServiceBody: new_service
-    }).then((result)=>{
-        console.log(result);
-    }).catch((e)=>{
-        console.log(e);
-    })
+    gonebusy.ServicesController.createService(
+        'Token ac98ed08b5b0a9e7c43a233aeba841ce',
+        new_service
+        ).then((result)=>{
+            console.log(result);
+        }).catch((e)=>{
+            console.log(e);
+        })
     ```
-    
+
     Output of `console.log()`:
     ```js
-    BaseModel {
-    service: 
-     BaseModel {
-       categories: [],
-       description: 'Sample Service for Testing',
-       duration: 30,
-       maxDuration: 30,
-       id: 4667058921,
-       isActive: true,
-       name: 'My Sample Service',
-       ownerId: 6845037920,
-       priceModelId: 3,
-       resources: [ 512294687 ],
-       shortName: 'My Sample x2' } }
+      CreateServiceResponse {
+        service:
+          EntitiesServiceResponse {
+              id: 'eaf76f54-f994-11e7-9c01-4fba28763be3',
+              ownerId: '00000000-0000-0000-0000-000000000080',
+              name: 'My Sample Service',
+              shortName: 'MyService x2',
+              duration: 30,
+              maxDuration: 30,
+              description: 'Sample Service for Testing',
+              priceModelId: 'eafb2bbc-f994-11e7-9c03-83290988f60b',
+              isActive: true,
+              categories: [],
+              resources: [ '00000000-0000-0000-0000-000000000034' ],
+              schedules: [ 'eb0246c2-f994-11e7-9c04-639c2510affb' ] } }
     ```
-    
+
 ## Using Response Helpers
 
-Just as with Request Body helpers, there are Response helper objects corresponding to each CreateXXXBody/UpdateXXXByIdBody/etc. operation.  
-
-When using Promises, the success result will be a Response instance as follows:
-
-```js
-gonebusy.ServicesController.createService({
-    authorization: 'Token ac98ed08b5b0a9e7c43a233aeba841ce',
-    createServiceBody: new_service
-}).then((resp)=>{
-    console.log(resp.getService());
-}).catch((e)=>{
-    console.log(e);
-})
-```
-
-Output of `console.log()`:
-```js
-BaseModel {
-categories: [],
-description: 'Sample Service for Testing',
-duration: 30,
-maxDuration: 30,
-id: 4667058921,
-isActive: true,
-name: 'My Sample Service',
-ownerId: 6845037920,
-priceModelId: 3,
-resources: [ 512294687 ],
-shortName: 'My Sample x2' }
-```
-
-In this example, the result of `resp.getService()` is an instance of `EntitiesServiceResponse`.
+Just as with Request Body helpers, there are Response helper objects corresponding to each CreateXXXBody/UpdateXXXByIdBody/etc. operation.

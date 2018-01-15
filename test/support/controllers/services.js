@@ -8,7 +8,7 @@ const GetServiceAvailableSlotsByIdResponse = require('../../../lib/Models/GetSer
 
 const servicesFixturesPath = `${fixturesPath}/services`;
 
-const indexParams = { user_id: 0, page: 1, per_page: 10 };
+const indexParams = { user_id: '06c711d1-7e2b-408f-b466-2c70c68fdc24', page: 1, per_page: 10 };
 
 const getServices = {
     nockRequest() {
@@ -54,9 +54,9 @@ const createParams = {
     description: 'string',
     duration: 0,
     max_duration: 0,
-    user_id: 0,
+    user_id: '06c711d1-7e2b-408f-b466-2c70c68fdc24',
     short_name: 'string',
-    price_model_id: 0,
+    price_model_id: '5d9cea4f-9e6a-46bd-9c7f-6195a88753eb',
     resources: 'string',
     categories: 'string'
 };
@@ -84,7 +84,7 @@ const createService = {
     }
 };
 
-const serviceId = 123;
+const serviceId = '3f58d6bb-59ba-4e7f-aeaa-2544c384d9d7';
 
 const getServiceById = {
     nockRequest() {

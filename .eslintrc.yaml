@@ -3,12 +3,10 @@ parser: "babel-eslint"
 rules:
   consistent-return: 0
   comma-dangle: 0
-  curly:
-    - 2
-    - multi
+  curly: 0
   func-names:
     - 2
-    - never
+    - as-needed
   func-style:
     - 2
     - expression
@@ -32,6 +30,7 @@ rules:
     - always
   strict: 0
 env:
+  commonjs: true
   mocha: true
   browser: true
   node: true

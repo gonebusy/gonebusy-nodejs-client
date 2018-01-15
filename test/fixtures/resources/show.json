@@ -1,7 +1,7 @@
 {
   "resource": {
-    "id": 123,
-    "owner_id": 0,
+    "id": "1f021e11-67c4-4014-b5c5-7a9874bdc67b",
+    "owner_id": "281ce067-50dc-4746-ac78-ded592655699",
     "name": "string",
     "description": "string",
     "resource_type": "string",

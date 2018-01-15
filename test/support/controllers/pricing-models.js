@@ -6,7 +6,7 @@ const UpdatePricingModelByIdResponse = require('../../../lib/Models/UpdatePricin
 
 const pricingFixturesPath = `${fixturesPath}/pricing_models`;
 
-const indexParams = { user_id: 0, page: 1, per_page: 10 };
+const indexParams = { user_id: '06c711d1-7e2b-408f-b466-2c70c68fdc24', page: 1, per_page: 10 };
 
 const getPricingModels = {
     nockRequest() {
@@ -47,7 +47,14 @@ const getPricingModels = {
     }
 };
 
-const createParams = { name: 'string', type: 'string', user_id: 0, notes: 'string', price: 0, currency: 'string' };
+const createParams = {
+    name: 'string',
+    type: 'string',
+    user_id: '06c711d1-7e2b-408f-b466-2c70c68fdc24',
+    notes: 'string',
+    price: 0,
+    currency: 'string'
+};
 
 const createPricingModel = {
     nockRequest() {
@@ -72,7 +79,7 @@ const createPricingModel = {
     }
 };
 
-const pricingModelId = 123;
+const pricingModelId = '5d9cea4f-9e6a-46bd-9c7f-6195a88753eb';
 
 const getPricingModelById = {
     nockRequest() {

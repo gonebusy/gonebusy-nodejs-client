@@ -5,7 +5,7 @@ const GetCategoryByIdResponse = require('../../../lib/Models/GetCategoryByIdResp
 
 const categoriesFixturesPath = `${fixturesPath}/categories`;
 
-const indexParams = { user_id: 0, page: 1, per_page: 10 };
+const indexParams = { user_id: '06c711d1-7e2b-408f-b466-2c70c68fdc24', page: 1, per_page: 10 };
 
 const getCategories = {
     nockRequest() {

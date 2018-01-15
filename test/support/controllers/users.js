@@ -65,7 +65,7 @@ const createUser = {
     }
 };
 
-const userId = 123;
+const userId = '281ce067-50dc-4746-ac78-ded592655699';
 
 const getUserById = {
     nockRequest() {
