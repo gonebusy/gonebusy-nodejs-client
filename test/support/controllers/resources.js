@@ -8,7 +8,7 @@ const UpdateResourceByIdResponse = require('../../../lib/Models/UpdateResourceBy
 
 const resourcesFixturesPath = `${fixturesPath}/resources`;
 
-const indexParams = { user_id: 0, page: 1, per_page: 10 };
+const indexParams = { user_id: '06c711d1-7e2b-408f-b466-2c70c68fdc24', page: 1, per_page: 10 };
 
 const getResources = {
     nockRequest() {
@@ -75,7 +75,14 @@ const getResourceThings = {
     }
 };
 
-const createParams = { service_id: 0, date: 'string', time: 'string', resource_id: 0, duration: 0, user_id: 0 };
+const createParams = {
+    service_id: '3f58d6bb-59ba-4e7f-aeaa-2544c384d9d7',
+    date: 'string',
+    time: 'string',
+    resource_id: '1f021e11-67c4-4014-b5c5-7a9874bdc67b',
+    duration: 0,
+    user_id: '06c711d1-7e2b-408f-b466-2c70c68fdc24'
+};
 
 const createResource = {
     nockRequest() {
@@ -100,7 +107,7 @@ const createResource = {
     }
 };
 
-const resourceId = 123;
+const resourceId = '1f021e11-67c4-4014-b5c5-7a9874bdc67b';
 
 const deleteResourceById = {
     nockRequest() {

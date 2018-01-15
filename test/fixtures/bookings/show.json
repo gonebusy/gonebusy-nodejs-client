@@ -1,11 +1,11 @@
 {
   "booking": {
-    "id": 123,
-    "owner_id": 0,
+    "id": "61d4bab7-4065-4fc8-a4a1-0a036a86a4af",
+    "owner_id": "281ce067-50dc-4746-ac78-ded592655699",
     "workflow_state": "string",
     "name": "string",
     "time_window": {
-      "id": 456,
+      "id": "e2218b5f-638f-4dcc-8b50-3a9f2d50ba6a",
       "start_date": "2016-12-19",
       "end_date": "2016-12-19",
       "start_time": "string",
@@ -20,8 +20,8 @@
       ],
       "unavailable": true
     },
-    "resource_id": 0,
-    "service_id": 0,
+    "resource_id": "1f021e11-67c4-4014-b5c5-7a9874bdc67b",
+    "service_id": "3f58d6bb-59ba-4e7f-aeaa-2544c384d9d7",
     "description": "string",
     "external_link": "string",
     "collaborative_link": "string"

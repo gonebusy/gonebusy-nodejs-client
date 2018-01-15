@@ -1,3 +1,5 @@
+const moment = require('moment');
+
 const BookingsController = require('../../../lib/Controllers/BookingsController');
 const GetBookingsResponse = require('../../../lib/Models/GetBookingsResponse');
 const CreateBookingResponse = require('../../../lib/Models/CreateBookingResponse');
@@ -8,9 +10,9 @@ const GetBookingByIdResponse = require('../../../lib/Models/GetBookingByIdRespon
 const bookingsFixturesPath = `${fixturesPath}/bookings`;
 
 const indexParams = {
-    user_id: 0,
+    user_id: '06c711d1-7e2b-408f-b466-2c70c68fdc24',
     states: 'string',
-    booker_id: 0,
+    booker_id: 'cfcaa008-d5b0-4a4a-8302-747a07c68001',
     page: 1,
     per_page: 10
 };
@@ -61,12 +63,12 @@ const getBookings = {
 };
 
 const createParams = {
-    service_id: 0,
+    service_id: '3f58d6bb-59ba-4e7f-aeaa-2544c384d9d7',
     date: 'string',
     time: 'string',
     resource_id: 0,
     duration: 0,
-    user_id: 0,
+    user_id: '06c711d1-7e2b-408f-b466-2c70c68fdc24',
     end_date: '2017-05-09',
     recurs_by: 'once',
     frequency: 'single',
@@ -100,7 +102,7 @@ const createBooking = {
     }
 };
 
-const bookingId = 123;
+const bookingId = '61d4bab7-4065-4fc8-a4a1-0a036a86a4af';
 const cancelParams = { cancel_recurring: false, date: '2017-05-05', end_date: '2017-05-05' };
 
 const cancelBookingById = {
@@ -115,8 +117,8 @@ const cancelBookingById = {
             BookingsController.cancelBookingById(
                 configuration.authorization,
                 bookingId,
-                cancelParams.date,
-                cancelParams.end_date,
+                moment(cancelParams.date),
+                moment(cancelParams.end_date),
                 cancelParams.cancel_recurring
             )
         ).to.eventually.be.resolved;
@@ -126,8 +128,8 @@ const cancelBookingById = {
             BookingsController.cancelBookingById(
                 configuration.authorization,
                 bookingId,
-                cancelParams.date,
-                cancelParams.end_date,
+                moment(cancelParams.date),
+                moment(cancelParams.end_date),
                 cancelParams.cancel_recurring
             )
         ).to.eventually.be.an.instanceof(CancelBookingByIdResponse);
@@ -137,8 +139,8 @@ const cancelBookingById = {
             BookingsController.cancelBookingById(
                 configuration.authorization,
                 bookingId,
-                cancelParams.date,
-                cancelParams.end_date,
+                moment(cancelParams.date),
+                moment(cancelParams.end_date),
                 cancelParams.cancel_recurring
             )
         ).to.eventually.have.property('booking').and.be.a('object').and.have.property('id').and.equal(bookingId);

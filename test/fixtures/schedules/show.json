@@ -1,12 +1,12 @@
 {
   "schedule": {
-    "id": 123,
-    "owner_id": 0,
-    "resource_id": 0,
-    "service_id": 0,
+    "id": "40d891e7-2217-45d1-a18b-30c995f20f47",
+    "owner_id": "281ce067-50dc-4746-ac78-ded592655699",
+    "resource_id": "1f021e11-67c4-4014-b5c5-7a9874bdc67b",
+    "service_id": "3f58d6bb-59ba-4e7f-aeaa-2544c384d9d7",
     "time_windows": [
       {
-        "id": 456,
+        "id": "e2218b5f-638f-4dcc-8b50-3a9f2d50ba6a",
         "start_date": "2016-12-19",
         "end_date": "2016-12-19",
         "start_time": "string",

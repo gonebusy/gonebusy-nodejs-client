@@ -1,22 +1,22 @@
 {
   "service": {
-    "id": 123,
-    "owner_id": 0,
+    "id": "3f58d6bb-59ba-4e7f-aeaa-2544c384d9d7",
+    "owner_id": "281ce067-50dc-4746-ac78-ded592655699",
     "name": "string",
     "short_name": "string",
     "duration": 0,
     "max_duration": 0,
     "description": "string",
-    "price_model_id": 0,
+    "price_model_id": "5d9cea4f-9e6a-46bd-9c7f-6195a88753eb",
     "is_active": true,
     "categories": [
       0
     ],
     "resources": [
-      0
+      "1f021e11-67c4-4014-b5c5-7a9874bdc67b"
     ],
     "schedules": [
-      0
+      "40d891e7-2217-45d1-a18b-30c995f20f47"
     ]
   }
 }

@@ -1,7 +1,7 @@
 {
   "pricing_model": {
-    "id": 123,
-    "owner_id": 0,
+    "id": "5d9cea4f-9e6a-46bd-9c7f-6195a88753eb",
+    "owner_id": "281ce067-50dc-4746-ac78-ded592655699",
     "name": "string",
     "notes": "string",
     "pricing_model_type": "string",

@@ -10,9 +10,9 @@ const UpdateScheduleTimeWindowByIdResponse = require('../../../lib/Models/Update
 const schedulesFixturesPath = `${fixturesPath}/schedules`;
 
 const indexParams = {
-    user_id: 0,
-    resource_id: 0,
-    service_id: 0,
+    user_id: '06c711d1-7e2b-408f-b466-2c70c68fdc24',
+    resource_id: '1f021e11-67c4-4014-b5c5-7a9874bdc67b',
+    service_id: '3f58d6bb-59ba-4e7f-aeaa-2544c384d9d7',
     page: 1,
     per_page: 10
 };
@@ -74,7 +74,14 @@ const createTimeWindowParams = {
     occurrence: '4th_to_last',
     date_recurs_by: 'day_in_month'
 };
-const createParams = _.assign({ service_id: 0, user_id: 123, resource_id: 0 }, createTimeWindowParams);
+const createParams = _.assign(
+    {
+        service_id: '3f58d6bb-59ba-4e7f-aeaa-2544c384d9d7',
+        user_id: '06c711d1-7e2b-408f-b466-2c70c68fdc24',
+        resource_id: '1f021e11-67c4-4014-b5c5-7a9874bdc67b'
+    },
+    createTimeWindowParams
+);
 
 const createSchedule = {
     nockRequest() {
@@ -99,7 +106,7 @@ const createSchedule = {
     }
 };
 
-const scheduleId = 123;
+const scheduleId = '40d891e7-2217-45d1-a18b-30c995f20f47';
 
 const deleteScheduleById = {
     nockRequest() {
@@ -173,8 +180,7 @@ const createScheduleTimeWindow = {
     }
 };
 
-
-const timeWindowId = 456;
+const timeWindowId = 'e2218b5f-638f-4dcc-8b50-3a9f2d50ba6a';
 
 const deleteScheduleTimeWindowById = {
     nockRequest() {

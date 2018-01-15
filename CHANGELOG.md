@@ -1,6 +1,15 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.2.0] - 2018-01-14 ##
+## BREAKING CHANGE
+- [#31](https://github.com/gonebusy/gonebusy-nodejs-client/pull/31)
+    - Updated SDK to pass string ids in UUID format for all API endpoints that refer to user, resource, service, schedule, time_window, and pricing_model ids.
+    - Date parameters to BookingsController.cancelBookingById and ServicesController.getServiceAvailableSlotsById should now be constructed with moment, rather than simply a String in 'YYYY-MM-DD' form.
+
+### Updated
+    - All tests to reflect use of UUID params as well as moment datetime objects.
+
 ## [0.1.3] - 2017-06-18 ##
 ### Added
 - [#30](https://github.com/gonebusy/gonebusy-nodejs-client/pull/30) - Booking creation/update now accept optional :name and :description
